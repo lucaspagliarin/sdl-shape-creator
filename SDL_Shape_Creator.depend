@@ -508,3 +508,47 @@
 	"Context.h"
 	"Math.h"
 
+1787847525 source:c:\www\cg\sdl_shape_creator\main.cpp
+	<SDL2/SDL.h>
+	<stdio.h>
+	<unistd.h>
+	<Context.h>
+	<Color.h>
+	<Point.h>
+	<Painter.h>
+	<Line.h>
+
+1787759942 c:\www\cg\sdl_shape_creator\include\context.h
+	<SDL2/SDL.h>
+
+1787759942 c:\www\cg\sdl_shape_creator\include\color.h
+	<SDL2/SDL.h>
+
+1787759942 c:\www\cg\sdl_shape_creator\include\point.h
+
+1787846886 c:\www\cg\sdl_shape_creator\include\line.h
+	<Point.h>
+	<Color.h>
+	<SDL2/SDL.h>
+
+1787759942 source:c:\www\cg\sdl_shape_creator\src\color.cpp
+	"Color.h"
+	"Context.h"
+
+1787759942 source:c:\www\cg\sdl_shape_creator\src\context.cpp
+	"Context.h"
+
+1787759942 source:c:\www\cg\sdl_shape_creator\src\point.cpp
+	"Point.h"
+
+1787952557 c:\www\cg\sdl_shape_creator\include\painter.h
+	<Point.h>
+	<Color.h>
+	<SDL2/SDL.h>
+
+1787847597 source:c:\www\cg\sdl_shape_creator\src\line.cpp
+	"Line.h"
+	"Context.h"
+	"Painter.h"
+	"Math.h"
+

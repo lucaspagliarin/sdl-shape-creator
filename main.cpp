@@ -6,6 +6,7 @@
 #include<Context.h>
 #include<Color.h>
 #include<Point.h>
+#include<Painter.h>
 #include<Line.h>
 
 
@@ -43,11 +44,11 @@ void display()
 
 void clear() {
 
-    Line l = Line();
+    Painter p = Painter();
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
     for(int x = 0;x < window_surface->w; x++){
         for(int y = 0;y < window_surface->h; y++) {
-            l.setPixel(x, y, 255, 255, 255);
+            p.setPixel(x, y, 255, 255, 255);
         }
     }
 
