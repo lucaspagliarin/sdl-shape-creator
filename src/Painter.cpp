@@ -1,6 +1,6 @@
 #include "Painter.h"
 #include "Context.h"
-#include "Math.h"
+#include "math.h"
 
 Painter::Painter()
 {
@@ -38,10 +38,15 @@ void Painter::setPixel(int x, int y, int r, int g, int b) {
 }
 
 void Painter::setPixel(int x, int y, int r, int g, int b, int a) {
-    unsigned int * pixels;
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
+
+    if (!window_surface) return; 
+
+    unsigned int * pixels;
     pixels = (unsigned int *) window_surface->pixels;
-    pixels[x + y * window_surface->w] = SDL_MapRGBA(window_surface->format, r, g, b, a);
+    if (x >= 0 && x < window_surface->w && y >= 0 && y < window_surface->h) {
+        pixels[x + y * window_surface->w] = SDL_MapRGBA(window_surface->format, r, g, b, a);
+    }
 }
 
 void Painter::drawLine(Point start, Point end, Color color, int antialias = 0) {

@@ -1,7 +1,7 @@
 #include "Line.h"
 #include "Context.h"
 #include "Painter.h"
-#include "Math.h"
+#include "math.h"
 
 Line::Line()
 {

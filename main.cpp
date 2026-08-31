@@ -54,6 +54,17 @@ void clear() {
 
 }
 
+// void clear() {
+//     // Pega o renderer direto do seu Context
+//     SDL_Renderer* renderer = Context::getInstance()->getRenderer(); 
+    
+//     // Define a cor de fundo (neste caso, Branco: 255, 255, 255, 255)
+//     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    
+//     // Limpa a tela inteira com a cor definida acima
+//     SDL_RenderClear(renderer);
+// }
+
 // Driver code
 int main(int argc, char* args[])
 {
@@ -64,21 +75,17 @@ int main(int argc, char* args[])
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
 	{
 		// if succeeded create our window
-		pWindow = SDL_CreateWindow("SDL_Classes",
+		pWindow = SDL_CreateWindow("SDL_Shape_Creator",
 					SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 														640, 480,
 												SDL_WINDOW_SHOWN);
 
 		// if the window creation succeeded create our renderer
 		if (pWindow != 0) {
-			pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
 			window_surface = SDL_GetWindowSurface(pWindow);
 
             // Inicializa o contexto gráfico da aplicação
-			Context * context = Context::getInstance();
-			context->setRenderer(pRenderer);
-			context->setWindowSurface(window_surface);
-
+            Context::getInstance()->setWindowSurface(window_surface);
         }
 
 	}
