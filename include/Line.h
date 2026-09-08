@@ -1,16 +1,15 @@
 #ifndef LINE_H
 #define LINE_H
-#include <Point.h>
-#include <Color.h>
+#include "Shape.h"
 #include<SDL2/SDL.h>
 
-class Line
+class Line : public Shape
 {
     public:
         Line();
         Line(Point start, Point end, Color color);
         Line(Point start, Point end, Color color, int antialias);
-        void draw();
+        void draw() override;
         virtual ~Line();
 
     protected:

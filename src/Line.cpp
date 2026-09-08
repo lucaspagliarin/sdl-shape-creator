@@ -1,3 +1,4 @@
+#include "Shape.h"
 #include "Line.h"
 #include "Context.h"
 #include "Painter.h"

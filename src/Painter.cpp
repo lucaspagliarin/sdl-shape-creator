@@ -1,6 +1,12 @@
 #include "Painter.h"
+#include "Point.h"
 #include "Context.h"
 #include "math.h"
+
+#include <list>
+#include <stack>
+
+using namespace std;
 
 Painter::Painter()
 {
@@ -374,3 +380,98 @@ void Painter::bresenham(int x1, int y1, int x2, int y2, int r, int g, int b)
     }
 }
 
+void Painter::displayBresenhamCircle(int xc, int yc, int x, int y, Color color){
+    
+    setPixel(xc+x, yc+y, color);
+    setPixel(xc-x, yc+y, color);
+    setPixel(xc+x, yc-y, color);
+    setPixel(xc-x, yc-y, color);
+    
+    setPixel(xc+y, yc+x, color);
+    setPixel(xc-y, yc+x, color);
+    setPixel(xc+y, yc-x, color);
+    setPixel(xc-y, yc-x, color);
+}
+
+void Painter::drawCircle(Point center, int radius, Color color){
+    int x = 0, y = radius;
+    int decisionParameter = 3 - 2 * radius;
+
+    displayBresenhamCircle(center.getX(), center.getY(), x, y, color);
+
+    while (y >= x){
+        x++;
+        
+        if(decisionParameter > 0){
+            y--;
+            decisionParameter = decisionParameter + 4 * (x - y) + 10;
+        } else {
+            decisionParameter = decisionParameter + 4 * x + 6;
+        }
+        displayBresenhamCircle(center.getX(), center.getY(), x, y, color);
+    }
+}
+
+void Painter::drawRectangle(int x1, int y1, int x2, int y2, Color color){
+    drawLine(Point(x1,y1), Point(x2,y1), color);
+    drawLine(Point(x1,y2), Point(x2,y2), color);
+    drawLine(Point(x1,y1), Point(x1,y2), color);
+    drawLine(Point(x2,y1), Point(x2,y2), color);
+}
+
+void Painter::drawPolygon(list<Point> points, Color color)
+{
+    Point primeiro = points.front();
+    Point anterior = points.front();
+    Point atual;
+
+    int i = 0;
+    for(Point p : points) {
+        if(i>0) {
+            atual = p;
+            drawLine(anterior, atual, color, 1);
+            anterior = atual;
+        }
+        i++;
+    }
+    drawLine(atual, primeiro, color, 1);
+}
+
+void Painter::drawBezier(Point start, Point end, Point anchor1, Point anchor2, Color color){
+    for (float u = 0.0; u < 1.0; u += 0.0001){
+        int xu = pow((1-u),3)*start.getX() + 3*u*pow(1-u,2)*anchor1.getX() + 3*pow(u,2)*(1-u)*anchor2.getX() + pow(u,3)*end.getX();
+
+        int yu = pow((1-u),3)*start.getY() + 3*u*pow(1-u,2)*anchor1.getY() + 3*pow(u,2)*(1-u)*anchor2.getY() + pow(u,3)*end.getY();
+
+        setPixel(xu, yu, color);
+    }
+}
+
+void Painter::floodFill(int x, int y, Color newColor, Color oldColor){
+    SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
+
+    if (y < 0 || y > window_surface->h - 1 || x < 0 || x > window_surface->w - 1){
+        return;
+    }
+    
+    stack<Point> st;
+    st.push(Point(x,y));
+    while(st.size() > 0){
+        Point p = st.top();
+        st.pop();
+        int x = p.getX();
+        int y = p.getY();
+        if (y < 0 || y > window_surface->h - 1 || x < 0 || x > window_surface->w - 1){
+            continue;
+        }
+
+        if (getPixel(x, y) == oldColor.getColor()){
+            setPixel(x, y, newColor);
+            st.push(Point(x+1, y));
+            st.push(Point(x-1, y));
+            st.push(Point(x, y+1));
+            st.push(Point(x, y-1));
+        }
+    }
+
+}
