@@ -106,3 +106,13 @@ Color Color::deSaturateColor(int amount) {
 
     return Color(newR, newG, newB);
 }
+
+bool Color::compareColors(Color color1, Color color2) {
+    bool rbool = color1.getR() == color2.getR();
+    bool gbool = color1.getG() == color2.getG();
+    bool bbool = color1.getB() == color2.getB();
+
+    if (rbool && gbool && bbool) return true;
+
+    return false;
+}
