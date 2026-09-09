@@ -18,6 +18,7 @@ class Color
         Uint8 getG();
         Uint8 getB();
         Color deSaturateColor(int amount);
+        static bool compareColors(Color color1, Color color2);
         virtual ~Color();
 
     protected:
