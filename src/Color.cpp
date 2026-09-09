@@ -23,6 +23,14 @@ Color::Color(Uint8 r, Uint8 g, Uint8 b)
     this->a = 255;
 }
 
+Color::Color(Uint32 rgb)
+{
+    this->r = getColorComponent(rgb, r);
+    this->g = getColorComponent(rgb, g);
+    this->b = getColorComponent(rgb, b);
+    this->a = 255;
+}
+
 Color::~Color()
 {
     //dtor
@@ -80,4 +88,21 @@ Uint8 Color::getColorComponent( Uint32 pixel, char component ) {
             break;
     }
     return (Uint8) pixel;
+}
+
+Color Color::deSaturateColor(int amount) {
+    // 1. Clamp the input amount between 0 and 255 to prevent unexpected behavior
+    if (amount < 0) amount = 0;
+    if (amount > 255) amount = 255;
+
+    // 2. Calculate the grayscale intensity (perceived luminance)
+    int gray = (int)(0.2126f * this->r + 0.7152f * this->g + 0.0722f * this->b);
+
+    // 3. Linearly interpolate using integer math, then shift right by 8 bits (divide by 256)
+    // Formula: original + (amount * (gray - original)) / 255
+    Uint8 newR = (Uint8)(this->r + (amount * (gray - (int)this->r)) / 255);
+    Uint8 newG = (Uint8)(this->g + (amount * (gray - (int)this->g)) / 255);
+    Uint8 newB = (Uint8)(this->b + (amount * (gray - (int)this->b)) / 255);
+
+    return Color(newR, newG, newB);
 }

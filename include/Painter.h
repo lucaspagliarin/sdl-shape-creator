@@ -18,6 +18,8 @@ class Painter
         void drawPolygon(list<Point> points, Color cor);
         void drawBezier(Point start, Point end, Point anchor1, Point anchor2, Color color);
         void floodFill(int x, int y, Color newColor, Color oldColor);
+        void fillRect(int x1, int y1, int x2, int y2, Color color);
+        Color getColorAt(int x, int y);
         virtual ~Painter();
 
     protected:

@@ -447,6 +447,25 @@ void Painter::drawBezier(Point start, Point end, Point anchor1, Point anchor2, C
     }
 }
 
+void Painter::fillRect(int x1, int y1, int x2, int y2, Color color) {
+    if (x1 > x2) { int aux = x1; x1 = x2; x2 = aux; }
+    if (y1 > y2) { int aux = y1; y1 = y2; y2 = aux; }
+    for (int x = x1; x <= x2; x++) {
+        for (int y = y1; y <= y2; y++) {
+            setPixel(x, y, color);
+        }
+    }
+}
+
+Color Painter::getColorAt(int x, int y) {
+    Uint32 pixel = getPixel(x, y);
+    Color c = Color();
+    Uint8 r = c.getColorComponent(pixel, 'r');
+    Uint8 g = c.getColorComponent(pixel, 'g');
+    Uint8 b = c.getColorComponent(pixel, 'b');
+    return Color(r, g, b);
+}
+
 void Painter::floodFill(int x, int y, Color newColor, Color oldColor){
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
 

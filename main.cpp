@@ -29,53 +29,59 @@ int offset = 10;
 
 list<unique_ptr<Shape>> shapes;
 
+Color windowColor = Color(255,255,255);
+
 void preLoadShapes() {
-    Color color = Color(255,0,0);
-
-    Point p1 = Point(600,400);
-    Point p2 = Point(10,10);
-
-    shapes.push_back(make_unique<Line>(p1, p2, color, 0));
+    Color color = Color(150,244,0);
+    Color color2 = Color(180,130,0);
 
     Point p3 = Point(600,430);
     Point p4 = Point(10,40);
 
-    shapes.push_back(make_unique<Line>(p3, p4, color, 1));
+    // shapes.push_back(make_unique<Line>(p3, p4, color, 1));
 
-    Point rec_min = Point(600,430);
-    Point rec_max = Point(10,40);
+    // Point rec_min = Point(600,430);
+    // Point rec_max = Point(10,40);
+
 
     shapes.push_back(make_unique<Rectangle>(p3, p4, color));
+    Shape& lastRect = *(shapes.back());
+    lastRect.setFill(color);
 
-    Point circle_center = Point(420,420);
-    int circle_radius = 250;
+    // Point p1 = Point(600,400);
+    // Point p2 = Point(10,10);
+
+    // shapes.push_back(make_unique<Line>(p1, p2, color2, 0));
+
+    // Point circle_center = Point(420,420);
+    // int circle_radius = 250;
 
 
-    shapes.push_back(make_unique<Circle>(circle_center, circle_radius, color));
+    // shapes.push_back(make_unique<Circle>(circle_center, circle_radius, color));
 
     list<Point> polygon_points;
 
-    polygon_points.push_back(Point(420,80));
-    polygon_points.push_back(Point(540, 350));
-    polygon_points.push_back(Point(300, 160));
-    polygon_points.push_back(Point(520, 160));
-    polygon_points.push_back(Point(340, 340));
+    polygon_points.push_back(Point(820,80));
+    polygon_points.push_back(Point(1140, 350));
+    polygon_points.push_back(Point(900, 160));
+    polygon_points.push_back(Point(1120, 160));
+    polygon_points.push_back(Point(1240, 340));
 
     shapes.push_back(make_unique<Polygon>(polygon_points, Color(20,140,255))); 
 
-    shapes.push_back(make_unique<Bezier>(Point(420,80), Point(540, 350), Point(300, 160), Point(340, 340), Color(20,140,140)));
+    Shape& lastPoly = *(shapes.back());
+    lastPoly.setFill(Color(30,140,255));
+
+    // shapes.push_back(make_unique<Bezier>(Point(420,80), Point(540, 350), Point(300, 160), Point(340, 340), Color(20,140,140)));
 }
 
 
 void display()
 {
-
     Painter p = Painter();
 
-    // p.drawCircle(Point(150,150), 50, color);
-
     for (const auto& shape : shapes) {
-        shape->draw(); // O operador -> acessa o comportamento polimórfico correto!
+        shape->draw();
     }
 }
 
@@ -85,7 +91,7 @@ void clear() {
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
     for(int x = 0;x < window_surface->w; x++){
         for(int y = 0;y < window_surface->h; y++) {
-            p.setPixel(x, y, 255, 255, 255);
+            p.setPixel(x, y, windowColor.getR(), windowColor.getG(), windowColor.getB());
         }
     }
 

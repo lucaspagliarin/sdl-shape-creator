@@ -9,6 +9,7 @@ class Color
         Color();
         Color(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
         Color(Uint8 r, Uint8 g, Uint8 b);
+        Color(Uint32 rgb);
         Uint8 getColorComponent( Uint32 pixel, char component );
         static Uint32 RGB(int r, int g, int b);
         Uint32 getColor();
@@ -16,6 +17,7 @@ class Color
         Uint8 getR();
         Uint8 getG();
         Uint8 getB();
+        Color deSaturateColor(int amount);
         virtual ~Color();
 
     protected:

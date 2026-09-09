@@ -12,6 +12,8 @@ class Polygon : public Shape
         Polygon();
         Polygon(list<Point> points, Color color);
         void draw() override;
+        bool contains(Point p, int tolerance = 5) override;
+        void translate(int dx, int dy) override;
         virtual ~Polygon();
 
     protected:
@@ -19,6 +21,7 @@ class Polygon : public Shape
     private:
         list<Point> points;
         Color color;
+        Point calculateCentroid();
 };
 
 #endif // POLYGON_H
