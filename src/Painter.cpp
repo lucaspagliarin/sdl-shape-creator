@@ -412,6 +412,13 @@ void Painter::drawCircle(Point center, int radius, Color color){
     }
 }
 
+void Painter::drawRectangle(int x1, int y1, int x2, int y2, Color color){
+    drawLine(Point(x1,y1), Point(x2,y1), color);
+    drawLine(Point(x1,y2), Point(x2,y2), color);
+    drawLine(Point(x1,y1), Point(x1,y2), color);
+    drawLine(Point(x2,y1), Point(x2,y2), color);
+}
+
 void Painter::drawRectangle(Point p1, Point p2, Point p3, Point p4, Color color){
 
     drawLine(p1, p2, color);
