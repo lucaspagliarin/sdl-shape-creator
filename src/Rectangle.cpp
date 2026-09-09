@@ -5,6 +5,7 @@
 #include "Painter.h"
 #include "Utils.h"
 #include "math.h"
+#include <cstdio>
 
 using namespace std;
 
@@ -36,38 +37,40 @@ Point Rectangle::calculateCentroid(){
     return Point{cx, cy};
 }
 
-void Rectangle::draw() {
-    
-    Painter p = Painter();
+void Rectangle::draw(Painter& p) {
+    int centerX = (min.getX() + max.getX()) / 2;
+    int centerY = (min.getY() + max.getY()) / 2;
+    Point pivo(centerX, centerY);
+    this->updateTransform(pivo);
+    Point t1 = transform.apply(this->min);
+    Point t2 = transform.apply(Point(this->max.getX(), this->min.getY()));
+    Point t3 = transform.apply(this->max);
+    Point t4 = transform.apply(Point(this->min.getX(), this->max.getY()));
 
-    p.drawRectangle(
-        this->min.getX(), 
-        this->min.getY(), 
-        this->max.getX(), 
-        this->max.getY(), 
-        borderColor);
+    p.drawRectangle(t1, t2, t3, t4, borderColor);
+    printf("Original min:(%d,%d) -> Transformado t1:(%d,%d)\n", min.getX(), min.getY(), t1.getX(), t1.getY());
 
     if (this->isFilled()) {
         // Ajustando a cor caso seja igual a da borda.
         Color paintColor = fillColor.deSaturateColor(50);
-        
+
         Point centroid = calculateCentroid();
-        
+
         Color oldColor = p.getColorAt(centroid.getX(), centroid.getY());
 
         Point inner1 = Utils::getInstance()->midPoint(min, centroid);
         Point inner2 = Utils::getInstance()->midPoint(max, centroid);
-        
+
         p.floodFill(centroid.getX(), centroid.getY(), paintColor, oldColor);
         p.floodFill(inner1.getX(), inner1.getY(), paintColor, oldColor);
         p.floodFill(inner2.getX(), inner2.getY(), paintColor, oldColor);
     }
 
     if (isSelected()) {
-        drawSelectionMarker(Point(min.getX(), min.getY()));
-        drawSelectionMarker(Point(max.getX(), min.getY()));
-        drawSelectionMarker(Point(max.getX(), max.getY()));
-        drawSelectionMarker(Point(min.getX(), max.getY()));
+        drawSelectionMarker(p,Point(min.getX(), min.getY()));
+        drawSelectionMarker(p,Point(max.getX(), min.getY()));
+        drawSelectionMarker(p,Point(max.getX(), max.getY()));
+        drawSelectionMarker(p,Point(min.getX(), max.getY()));
     }
 }
 

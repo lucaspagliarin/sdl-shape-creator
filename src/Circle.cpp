@@ -22,9 +22,7 @@ Circle::Circle(Point center, int radius, Color color) {
     this->color = color;
 }
 
-void Circle::draw() {
-    
-    Painter p = Painter();
+void Circle::draw(Painter& p) {
 
     p.drawCircle(
         this->center,
@@ -45,7 +43,7 @@ void Circle::draw() {
 
     if (isSelected()) {
         p.drawCircle(this->center, this->radius + 3, Color(255, 0, 255));
-        drawSelectionMarker(this->center);
+        drawSelectionMarker(p,this->center);
     }
 }
 

@@ -39,9 +39,7 @@ Bezier::Bezier(list<Point> points, Color color) {
     this->color = color;
 }
 
-void Bezier::draw() {
-    
-    Painter p = Painter();
+void Bezier::draw(Painter& p) {
 
     p.drawBezier(
         this->start,
@@ -50,7 +48,7 @@ void Bezier::draw() {
         this->anchor2,
         color);
 
-    
+
     p.drawCircle(this->start, 5, color);
     p.drawCircle(this->end, 5, color);
     p.drawCircle(this->anchor1, 5, color);

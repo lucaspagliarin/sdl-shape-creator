@@ -9,7 +9,7 @@ class Line : public Shape
         Line();
         Line(Point start, Point end, Color color);
         Line(Point start, Point end, Color color, int antialias);
-        void draw() override;
+        void draw(Painter& p) override;
         bool contains(Point p, int tolerance = 5) override;
         void translate(int dx, int dy) override;
         virtual ~Line();

@@ -11,7 +11,7 @@ class Polygon : public Shape
     public:
         Polygon();
         Polygon(list<Point> points, Color color);
-        void draw() override;
+        void draw(Painter& p) override;
         bool contains(Point p, int tolerance = 5) override;
         void translate(int dx, int dy) override;
         virtual ~Polygon();

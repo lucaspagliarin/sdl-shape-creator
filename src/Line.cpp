@@ -28,8 +28,7 @@ Line::Line(Point start, Point end, Color color, int antialias) {
     this->antialias = antialias;
 }
 
-void Line::draw() {
-    Painter p = Painter();
+void Line::draw(Painter& p) {
     p.drawLine(
         this->start,
         this->end,

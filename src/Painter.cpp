@@ -2,7 +2,7 @@
 #include "Point.h"
 #include "Context.h"
 #include "math.h"
-
+#include "Transform.h"
 #include <list>
 #include <stack>
 
@@ -46,7 +46,7 @@ void Painter::setPixel(int x, int y, int r, int g, int b) {
 void Painter::setPixel(int x, int y, int r, int g, int b, int a) {
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
 
-    if (!window_surface) return; 
+    if (!window_surface) return;
 
     unsigned int * pixels;
     pixels = (unsigned int *) window_surface->pixels;
@@ -381,12 +381,12 @@ void Painter::bresenham(int x1, int y1, int x2, int y2, int r, int g, int b)
 }
 
 void Painter::displayBresenhamCircle(int xc, int yc, int x, int y, Color color){
-    
+
     setPixel(xc+x, yc+y, color);
     setPixel(xc-x, yc+y, color);
     setPixel(xc+x, yc-y, color);
     setPixel(xc-x, yc-y, color);
-    
+
     setPixel(xc+y, yc+x, color);
     setPixel(xc-y, yc+x, color);
     setPixel(xc+y, yc-x, color);
@@ -401,7 +401,7 @@ void Painter::drawCircle(Point center, int radius, Color color){
 
     while (y >= x){
         x++;
-        
+
         if(decisionParameter > 0){
             y--;
             decisionParameter = decisionParameter + 4 * (x - y) + 10;
@@ -412,11 +412,12 @@ void Painter::drawCircle(Point center, int radius, Color color){
     }
 }
 
-void Painter::drawRectangle(int x1, int y1, int x2, int y2, Color color){
-    drawLine(Point(x1,y1), Point(x2,y1), color);
-    drawLine(Point(x1,y2), Point(x2,y2), color);
-    drawLine(Point(x1,y1), Point(x1,y2), color);
-    drawLine(Point(x2,y1), Point(x2,y2), color);
+void Painter::drawRectangle(Point p1, Point p2, Point p3, Point p4, Color color){
+
+    drawLine(p1, p2, color);
+    drawLine(p2, p3, color);
+    drawLine(p3, p4, color);
+    drawLine(p4, p1, color);
 }
 
 void Painter::drawPolygon(list<Point> points, Color color)
@@ -472,7 +473,7 @@ void Painter::floodFill(int x, int y, Color newColor, Color oldColor){
     if (y < 0 || y > window_surface->h - 1 || x < 0 || x > window_surface->w - 1){
         return;
     }
-    
+
     stack<Point> st;
     st.push(Point(x,y));
     while(st.size() > 0){

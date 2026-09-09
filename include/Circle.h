@@ -11,7 +11,7 @@ class Circle : public Shape
     public:
         Circle();
         Circle(Point center, int radius, Color color);
-        void draw() override;
+        void draw(Painter& p) override;
         bool contains(Point p, int tolerance = 5) override;
         void translate(int dx, int dy) override;
         virtual ~Circle();

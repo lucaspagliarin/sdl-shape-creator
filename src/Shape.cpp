@@ -8,6 +8,10 @@ Shape::Shape()
 {
     selected = false;
     filled = false;
+    this->scaleX=1.0f;
+    this->scaleY=1.0f;
+    this->angle = 0.0f;
+    this->points = Point(0,0);
 }
 
 Shape::~Shape()
@@ -15,7 +19,7 @@ Shape::~Shape()
     //dtor
 }
 
-void Shape::draw(){
+void Shape::draw(Painter& p){
     // override
     std::cout << "Desenhando..." << std::endl;
 }
@@ -68,7 +72,34 @@ double Shape::distancePointToSegment(Point p, Point a, Point b) {
     return sqrt(distX * distX + distY * distY);
 }
 
-void Shape::drawSelectionMarker(Point p) {
-    Painter painter = Painter();
-    painter.drawRectangle(p.getX() - 4, p.getY() - 4, p.getX() + 4, p.getY() + 4, Color(255, 0, 255));
+void Shape::drawSelectionMarker(Painter& painter, Point p) {
+    int halfSize = 4; //
+
+    Point p1(p.getX() - halfSize, p.getY() - halfSize);
+    Point p2(p.getX() + halfSize, p.getY() - halfSize);
+    Point p3(p.getX() + halfSize, p.getY() + halfSize);
+    Point p4(p.getX() - halfSize, p.getY() + halfSize);
+
+    painter.drawRectangle(p1, p2, p3, p4, Color(255, 0, 255));
 }
+void Shape::setAngle(double angle)
+{
+    this->angle = angle;
+}
+void Shape::setScale(double sx, double sy)
+{
+    this->scaleX = sx;
+    this->scaleY = sy;
+}
+void Shape::setPoint(int x, int y)
+{
+    this->points= Point(x,y);
+}
+void Shape::updateTransform(Point pivot) {
+
+    transform.setRotation(this->angle);
+    transform.setScale(this->scaleX, this->scaleY);
+
+    transform.computeFinalMatrix(pivot, this->points);
+}
+

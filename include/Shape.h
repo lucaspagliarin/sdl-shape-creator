@@ -4,32 +4,41 @@
 #include <Point.h>
 #include <Color.h>
 #include<SDL2/SDL.h>
+#include "Point.h"
+#include "Painter.h"
+#include "Transform.h"
 
 class Shape
 {
     public:
         Shape();
-        virtual void draw();
+        virtual void draw(Painter& p);
         virtual bool contains(Point p, int tolerance = 5);
         virtual void translate(int dx, int dy);
         void setSelected(bool value);
         bool isSelected();
         void setFill(Color color, bool filled = true);
         bool isFilled();
-        
+        void drawSelectionMarker(Painter& painter, Point p);
+        void setAngle(double angle);
+        void setScale(double sx, double sy);
+        void setPoint(int x, int y);
+        void updateTransform(Point pivot);
+
         virtual ~Shape();
 
     protected:
         Point points;
         Color borderColor;
         Color fillColor;
+
         bool selected;
         bool filled;
+        double angle;
+        double scaleX,scaleY;
+        Transform transform;
 
         double distancePointToSegment(Point p, Point a, Point b);
-
-        // desenha um pequeno marcador (handle) num ponto, usado para
-        // indicar visualmente que o objeto esta selecionado
         void drawSelectionMarker(Point p);
 
     private:

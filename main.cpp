@@ -46,7 +46,9 @@ void preLoadShapes() {
 
     shapes.push_back(make_unique<Rectangle>(p3, p4, color));
     Shape& lastRect = *(shapes.back());
-    lastRect.setFill(color);
+    //lastRect.setFill(color);
+    lastRect.setPoint(200,100);
+
 
     // Point p1 = Point(600,400);
     // Point p2 = Point(10,10);
@@ -67,7 +69,7 @@ void preLoadShapes() {
     polygon_points.push_back(Point(1120, 160));
     polygon_points.push_back(Point(1240, 340));
 
-    shapes.push_back(make_unique<Polygon>(polygon_points, Color(20,140,255))); 
+    shapes.push_back(make_unique<Polygon>(polygon_points, Color(20,140,255)));
 
     Shape& lastPoly = *(shapes.back());
     lastPoly.setFill(Color(30,140,255));
@@ -81,7 +83,7 @@ void display()
     Painter p = Painter();
 
     for (const auto& shape : shapes) {
-        shape->draw();
+        shape->draw(p);
     }
 }
 
@@ -99,11 +101,11 @@ void clear() {
 
 // void clear() {
 //     // Pega o renderer direto do seu Context
-//     SDL_Renderer* renderer = Context::getInstance()->getRenderer(); 
-    
+//     SDL_Renderer* renderer = Context::getInstance()->getRenderer();
+
 //     // Define a cor de fundo (neste caso, Branco: 255, 255, 255, 255)
 //     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    
+
 //     // Limpa a tela inteira com a cor definida acima
 //     SDL_RenderClear(renderer);
 // }

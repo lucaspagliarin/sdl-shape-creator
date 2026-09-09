@@ -14,7 +14,7 @@ class Painter
         void setPixel(int x, int y, int r, int g, int b);
         void drawLine(Point start, Point end, Color color, int antialias);
         void drawCircle(Point center, int radius, Color color);
-        void drawRectangle(int x1, int y1, int x2, int y2, Color color);
+        void drawRectangle(Point p1, Point p2, Point p3, Point p4, Color color);
         void drawPolygon(list<Point> points, Color cor);
         void drawBezier(Point start, Point end, Point anchor1, Point anchor2, Color color);
         void floodFill(int x, int y, Color newColor, Color oldColor);

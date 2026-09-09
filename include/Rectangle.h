@@ -3,7 +3,7 @@
 #include "Shape.h"
 #include<SDL2/SDL.h>
 #include <list>
-
+#include <memory>
 using namespace std;
 
 class Rectangle : public Shape
@@ -11,7 +11,7 @@ class Rectangle : public Shape
     public:
         Rectangle();
         Rectangle(Point min, Point max, Color color);
-        void draw() override;
+        void draw(Painter& p) override;
         bool contains(Point p, int tolerance = 5) override;
         void translate(int dx, int dy) override;
         virtual ~Rectangle();

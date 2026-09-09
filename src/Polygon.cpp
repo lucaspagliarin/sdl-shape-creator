@@ -23,29 +23,27 @@ Polygon::Polygon(list<Point> points, Color color) {
     this->color = color;
 }
 
-void Polygon::draw() {
-
-    Painter p = Painter();
+void Polygon::draw(Painter& p) {
 
     p.drawPolygon(
         this->points,
         color);
 
-    
+
     Point centroid = calculateCentroid();
 
-    
-    
+
+
     if (this->isFilled()) {
         // Ajustando a cor caso seja igual a da borda.
         Color paintColor = fillColor.deSaturateColor(50);
-        
+
         Point centroid = calculateCentroid();
-        
+
         Color oldColor = p.getColorAt(centroid.getX(), centroid.getY());
 
         p.floodFill(centroid.getX(), centroid.getY(), paintColor, oldColor);
-        
+
         // for (Point pt : this->points) {
         //     Point inner = Utils::getInstance()->midPoint(pt, centroid);
         //     p.floodFill(inner.getX(), inner.getY(), paintColor, oldColor);
@@ -56,7 +54,7 @@ void Polygon::draw() {
 
     if (isSelected()) {
         for (Point& pt : this->points) {
-            drawSelectionMarker(pt);
+            drawSelectionMarker(p,pt);
         }
     }
 }
@@ -85,7 +83,7 @@ void Polygon::translate(int dx, int dy) {
 
 Point Polygon::calculateCentroid() {
     size_t n = this->points.size();
-    
+
     // A valid polygon needs at least 3 vertices
     if (n < 3) {
         return Point{0, 0}; // Or handle according to your Point constructor
@@ -97,7 +95,7 @@ Point Polygon::calculateCentroid() {
 
     // Use iterators to traverse the std::list
     auto current = this->points.begin();
-    
+
     for (size_t i = 0; i < n; ++i) {
         // Get the next iterator, wrap around to the beginning if at the end
         auto next = current;
@@ -114,7 +112,7 @@ Point Polygon::calculateCentroid() {
         // Shoelace formula component
         double a = (x0 * y1) - (x1 * y0);
         signedArea += a;
-        
+
         cx += (x0 + x1) * a;
         cy += (y0 + y1) * a;
 
@@ -126,12 +124,12 @@ Point Polygon::calculateCentroid() {
 
     // Check to avoid division by zero if the polygon is a straight line
     if (std::abs(signedArea) < 1e-9) {
-        return Point{0, 0}; 
+        return Point{0, 0};
     }
 
     cx /= (6.0 * signedArea);
     cy /= (6.0 * signedArea);
 
     // Return the calculated center as a new Point object
-    return Point{cx, cy}; 
+    return Point{cx, cy};
 }
