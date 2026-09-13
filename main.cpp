@@ -2,6 +2,7 @@
 #include<SDL2/SDL.h>
 #include<stdio.h>
 #include <unistd.h>
+#include <vector>
 
 #include <list>
 
@@ -30,15 +31,15 @@ list<unique_ptr<Shape>> shapes;
 
 Color windowColor = Color(255,255,255);
 
-enum ToolType { 
-    TOOL_LINE, 
-    TOOL_RECTANGLE, 
-    TOOL_CIRCLE, 
-    TOOL_POLYGON, 
-    TOOL_BEZIER, 
-    TOOL_FILL, 
+enum ToolType {
+    TOOL_LINE,
+    TOOL_RECTANGLE,
+    TOOL_CIRCLE,
+    TOOL_POLYGON,
+    TOOL_BEZIER,
+    TOOL_FILL,
     TOOL_SELECT,
-    TOOL_COLOR, 
+    TOOL_COLOR,
 };
 const int TOOL_COUNT = 8;
 
@@ -88,7 +89,7 @@ void deleteSelectedShape() {
     draggingShape = false;
 }
 
-// Configuraçoes da ToolBox 
+// Configuraçoes da ToolBox
 
 const int TOOLBOX_HEIGHT = 50;
 const int TOOLBOX_BOX_SIZE = 40;
@@ -123,11 +124,11 @@ struct ColorPicker {
 const int COLOR_COUNT = 5;
 
 ColorPicker colorPickerOptions[COLOR_COUNT] = {
-    { "Black", Color(20, 20, 20), '1' },   
-    { "Red", Color(220, 30, 30), '2' },        
-    { "Green", Color(30, 140, 30), '3' },       
-    { "Blue", Color(30, 60, 220), '4' },        
-    { "White", Color(255, 255, 255), '5' },        
+    { "Black", Color(20, 20, 20), '1' },
+    { "Red", Color(220, 30, 30), '2' },
+    { "Green", Color(30, 140, 30), '3' },
+    { "Blue", Color(30, 60, 220), '4' },
+    { "White", Color(255, 255, 255), '5' },
 };
 
 // devolve os limites (x1,y1,x2,y2) da i-ésima caixa da toolbox
@@ -207,7 +208,7 @@ void drawColors() {
     Painter p = Painter();
     for (int i = 0; i < COLOR_COUNT; i++) {
         int x1, y1, x2, y2;
-        
+
         getToolBoxColorsRect(i, x1, y1, x2, y2);
         p.fillRect(x1, y1, x2, y2, colorPickerOptions[i].color);
         if(Color::compareColors(colorPickerOptions[i].color, Color(255,255,255))){
@@ -215,8 +216,8 @@ void drawColors() {
         } else {
             Context::getInstance()->drawChar(colorPickerOptions[i].shortcut, x1 + TOOLBOX_PADDING, y1 + TOOLBOX_PADDING, 1);
         }
-        
-        
+
+
 
         // contorno: vermelho e mais grosso se for a ferramenta ativa
         Color border = (Color::compareColors(colorPickerOptions[i].color, currentColor) ? Color(255, 0, 0) : Color(0, 0, 0));
@@ -248,10 +249,10 @@ void drawToolInfo(string name){
     int x2 = window_surface->w/2 + TEXT_BOX_WIDTH/2;
     int y1 = window_surface->h/2 - TEXT_BOX_HEIGHT/2;
     int y2 = window_surface->h/2 + TEXT_BOX_HEIGHT/2;
-    
+
     p.fillRect(x1, y1, x2, y2, Color(0,0,0, 150));
     Context::getInstance()->drawString(name, x1 + TEXT_BOX_PADDING, y1 + TEXT_BOX_PADDING, 1);
-        
+
 }
 
 // ============================================================
@@ -397,7 +398,7 @@ void drawPreview() {
         case TOOL_BEZIER:
             if (pendingPoints.size() == 3) {
                 p.drawBezier(pendingPoints[0], pendingPoints[1], pendingPoints[2], pendingPoints[1], Color(255, 0, 0));
-            } else if (pendingPoints.size() == 2) { 
+            } else if (pendingPoints.size() == 2) {
                 p.drawBezier(pendingPoints[0], pendingPoints[1], pendingPoints[0], pendingPoints[1], Color(255, 0, 0));
             } else if (pendingPoints.size() == 1) {
                 p.drawCircle(pendingPoints[0], 3, Color(255,0,0));
@@ -486,7 +487,7 @@ void display()
     drawToolBox();
     if (currentTool == TOOL_COLOR) {
         drawColors();
-    } 
+    }
 
     if (showToolText) {
 
@@ -544,7 +545,7 @@ int main(int argc, char* args[])
         }
 
         bool fontLoaded = Context::getInstance()->loadBitmapFont("../assets/Minecraft_bitmap_font_SDL2.bmp", 16, 16, 16);
-    
+
         if (!fontLoaded) {
             printf("Font not loaded: %s\n", SDL_GetError());
         }
@@ -588,7 +589,7 @@ int main(int argc, char* args[])
             {
                 int x = event.button.x;
                 int y = event.button.y;
-                
+
                 if(currentTool == TOOL_COLOR){
                     int colorIndex = hitTestColorsToolBox(x, y);
                     if (colorIndex >= 0) {
@@ -609,7 +610,7 @@ int main(int argc, char* args[])
                         showToolText = false;
                     }
                 }
-                
+
             }
 
             if (event.type == SDL_MOUSEMOTION)
@@ -654,6 +655,31 @@ int main(int argc, char* args[])
                         deleteSelectedShape();
                         break;
                     case SDLK_ESCAPE: cancelPendingShape(); break;
+                    case SDLK_PLUS:
+                    case SDLK_KP_PLUS: // Tecla '+' (Aumenta a escala)
+                        if (selectedShape) {
+                            selectedShape->setScale(selectedShape->getScaleX()+0.1,selectedShape->getScaleY()+0.1 ); // Aumenta 10%
+                        }
+                        break;
+
+                    case SDLK_MINUS:
+                    case SDLK_KP_MINUS: // Tecla '-' (Diminui a escala)
+                        if (selectedShape) {
+                            selectedShape->setScale(selectedShape->getScaleX()-0.1,selectedShape->getScaleY()-0.1); // Diminui 10%
+                        }
+                        break;
+
+                    case SDLK_LEFT: // Seta para esquerda (Rotaciona -5 graus)
+                        if (selectedShape) {
+
+                        }
+                        break;
+
+                    case SDLK_RIGHT: // Seta para direita (Rotaciona +5 graus)
+                        if (selectedShape) {
+                            // selectedShape->rotate(5);
+                        }
+                        break;
                     // paleta de cores basica (Fase 3 - pode crescer depois)
                     case SDLK_1: selectColor(colorPickerOptions[0].color); break; // preto
                     case SDLK_2: selectColor(colorPickerOptions[1].color); break; // vermelho

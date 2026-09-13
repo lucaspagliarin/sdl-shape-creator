@@ -22,6 +22,7 @@ class Polygon : public Shape
         list<Point> points;
         Color color;
         Point calculateCentroid();
+        Point initialCentroid;
 };
 
 #endif // POLYGON_H

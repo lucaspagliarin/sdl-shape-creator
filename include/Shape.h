@@ -22,13 +22,16 @@ class Shape
         void drawSelectionMarker(Painter& painter, Point p);
         void setAngle(double angle);
         void setScale(double sx, double sy);
+        double getScaleX();
+        double getScaleY();
+        double getAngle();
         void setPoint(int x, int y);
         void updateTransform(Point pivot);
 
         virtual ~Shape();
 
     protected:
-        Point points;
+        Point position;
         Color borderColor;
         Color fillColor;
 

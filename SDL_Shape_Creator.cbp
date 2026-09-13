@@ -52,6 +52,7 @@
 		<Unit filename="include/Polygon.h" />
 		<Unit filename="include/Rectangle.h" />
 		<Unit filename="include/Shape.h" />
+		<Unit filename="include/Transform.h" />
 		<Unit filename="include/Utils.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Bezier.cpp" />
@@ -64,6 +65,7 @@
 		<Unit filename="src/Polygon.cpp" />
 		<Unit filename="src/Rectangle.cpp" />
 		<Unit filename="src/Shape.cpp" />
+		<Unit filename="src/Transform.cpp" />
 		<Unit filename="src/Utils.cpp" />
 		<Extensions />
 	</Project>

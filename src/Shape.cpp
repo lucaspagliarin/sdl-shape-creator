@@ -11,7 +11,7 @@ Shape::Shape()
     this->scaleX=1.0f;
     this->scaleY=1.0f;
     this->angle = 0.0f;
-    this->points = Point(0,0);
+    this->position = Point(0,0);
 }
 
 Shape::~Shape()
@@ -93,13 +93,25 @@ void Shape::setScale(double sx, double sy)
 }
 void Shape::setPoint(int x, int y)
 {
-    this->points= Point(x,y);
+    std::cout << "[SETPOINT] Novo position -> x: " << x << ", y: " << y << std::endl;
+    this->position= Point(x,y);
 }
 void Shape::updateTransform(Point pivot) {
 
     transform.setRotation(this->angle);
     transform.setScale(this->scaleX, this->scaleY);
 
-    transform.computeFinalMatrix(pivot, this->points);
+    transform.computeFinalMatrix(pivot, this->position);
 }
-
+double Shape::getScaleX()
+{
+    return this->scaleX;
+}
+double Shape::getScaleY()
+{
+    return this->scaleY;
+}
+double Shape::getAngle()
+{
+    return this->angle;
+}

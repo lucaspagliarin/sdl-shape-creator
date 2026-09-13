@@ -5,6 +5,8 @@
 #include "Painter.h"
 #include "Utils.h"
 #include "math.h"
+#include <list>
+#include <iostream>
 
 using namespace std;
 
@@ -21,51 +23,58 @@ Polygon::~Polygon()
 Polygon::Polygon(list<Point> points, Color color) {
     this->points = points;
     this->color = color;
+    this->initialCentroid = this->calculateCentroid();
 }
 
 void Polygon::draw(Painter& p) {
 
+    this->updateTransform(this->initialCentroid);
+
+    list<Point> pontosDraw;
+  for (const Point& pt : this->points) {
+        // Aplica a matriz de transformação no ponto atual
+        Point ptTransformado = this->transform.apply(pt);
+
+        // Coloca o novo ponto transformado na nova lista
+        pontosDraw.push_back(ptTransformado);
+    }
+    Point centroidatual = this->transform.apply(this->initialCentroid);
     p.drawPolygon(
-        this->points,
-        color);
-
-
-    Point centroid = calculateCentroid();
-
-
+        pontosDraw,
+        this->color);
 
     if (this->isFilled()) {
-        // Ajustando a cor caso seja igual a da borda.
         Color paintColor = fillColor.deSaturateColor(50);
 
-        Point centroid = calculateCentroid();
+        Color oldColor = p.getColorAt(centroidatual.getX(), centroidatual.getY());
 
-        Color oldColor = p.getColorAt(centroid.getX(), centroid.getY());
+        p.floodFill(centroidatual.getX(), centroidatual.getY(), paintColor, oldColor);
 
-        p.floodFill(centroid.getX(), centroid.getY(), paintColor, oldColor);
-
-        // for (Point pt : this->points) {
-        //     Point inner = Utils::getInstance()->midPoint(pt, centroid);
-        //     p.floodFill(inner.getX(), inner.getY(), paintColor, oldColor);
-        // }
     }
 
-    p.drawCircle(centroid, 5, Color(255,0,0));
+    p.drawCircle(centroidatual, 5, Color(255,0,0));
 
     if (isSelected()) {
-        for (Point& pt : this->points) {
+        for (Point& pt : pontosDraw) {
             drawSelectionMarker(p,pt);
         }
-    }
-}
+}}
 
 bool Polygon::contains(Point p, int tolerance) {
     if (this->points.size() < 2) return false;
 
-    double minDist = -1;
-    Point previous = this->points.back();
+   this->updateTransform(this->initialCentroid);
 
-    for (Point& current : this->points) {
+    list<Point> pontosDraw;
+    for (const Point& pt : this->points) {
+        Point ptTransformado = this->transform.apply(pt);
+        pontosDraw.push_back(ptTransformado);
+    }
+
+    double minDist = -1;
+    Point previous = pontosDraw.back();
+
+    for (const Point& current : pontosDraw) {
         double d = distancePointToSegment(p, previous, current);
         if (minDist < 0 || d < minDist) minDist = d;
         previous = current;
@@ -74,11 +83,11 @@ bool Polygon::contains(Point p, int tolerance) {
     return minDist >= 0 && minDist <= tolerance;
 }
 
+
 void Polygon::translate(int dx, int dy) {
-    for (Point& pt : this->points) {
-        pt.setX(pt.getX() + dx);
-        pt.setY(pt.getY() + dy);
-    }
+    int currentX = this->position.getX() + dx;
+    int currentY = this->position.getY() + dy;
+    this->setPoint(currentX, currentY);
 }
 
 Point Polygon::calculateCentroid() {
@@ -89,8 +98,8 @@ Point Polygon::calculateCentroid() {
         return Point{0, 0}; // Or handle according to your Point constructor
     }
 
-    int cx = 0;
-    int cy = 0;
+    double cx = 0;
+    double cy = 0;
     double signedArea = 0.0;
 
     // Use iterators to traverse the std::list
@@ -109,6 +118,7 @@ Point Polygon::calculateCentroid() {
         double x1 = next->getX();
         double y1 = next->getY();
 
+
         // Shoelace formula component
         double a = (x0 * y1) - (x1 * y0);
         signedArea += a;
@@ -121,6 +131,7 @@ Point Polygon::calculateCentroid() {
     }
 
     signedArea *= 0.5;
+
 
     // Check to avoid division by zero if the polygon is a straight line
     if (std::abs(signedArea) < 1e-9) {

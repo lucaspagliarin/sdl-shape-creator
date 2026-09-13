@@ -71,7 +71,6 @@ void Transform::computeFinalMatrix(Point pivot, Point position) {
     backFromOrigin[0][2] = pivot.getX() + position.getX();
     backFromOrigin[1][2] = pivot.getY() + position.getY();
 
-
     float temp1[3][3];
     float temp2[3][3];
 

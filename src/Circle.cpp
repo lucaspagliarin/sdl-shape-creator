@@ -23,41 +23,44 @@ Circle::Circle(Point center, int radius, Color color) {
 }
 
 void Circle::draw(Painter& p) {
-
+    this->updateTransform(this->center);
+    int raioTransformado = (int)(this->radius * this->getScaleX());
     p.drawCircle(
-        this->center,
-        this->radius,
+        this->transform.apply(this->center),
+        raioTransformado,
         color);
 
     if (this->isFilled()){
         Color paintColor = fillColor.deSaturateColor(50);
-        Color oldColor = p.getColorAt(this->center.getX(), this->center.getY());
+        Point center = this->transform.apply(this->center);
+        Color oldColor = p.getColorAt(center.getX(),center.getY());
 
         p.floodFill(
-            this->center.getX(),
-            this->center.getY(),
+            center.getX(),
+            center.getY(),
             paintColor,
             oldColor
         );
     }
 
     if (isSelected()) {
-        p.drawCircle(this->center, this->radius + 3, Color(255, 0, 255));
-        drawSelectionMarker(p,this->center);
+        p.drawCircle(this->transform.apply(this->center), raioTransformado+ 3, Color(255, 0, 255));
+        drawSelectionMarker(p,this->transform.apply(this->center));
     }
 }
 
 bool Circle::contains(Point p, int tolerance) {
-    double dx = p.getX() - this->center.getX();
-    double dy = p.getY() - this->center.getY();
+    double dx = p.getX() - this->transform.apply(this->center).getX();
+    double dy = p.getY() - this->transform.apply(this->center).getY();
     double dist = sqrt(dx * dx + dy * dy);
 
     // o circulo e preenchido (flood-fill), entao qualquer pixel
     // dentro do raio (+ tolerancia) faz parte do objeto
-    return dist <= this->radius + tolerance;
+    return dist <= ((int)(this->radius * this->getScaleX())) + tolerance;
 }
 
 void Circle::translate(int dx, int dy) {
-    this->center.setX(this->center.getX() + dx);
-    this->center.setY(this->center.getY() + dy);
+    int currentX = this->position.getX() + dx;
+    int currentY = this->position.getY() + dy;
+    this->setPoint(currentX, currentY);
 }

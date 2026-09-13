@@ -79,11 +79,13 @@ void Painter::drawLine(Point start, Point end, Color color, int antialias = 0) {
 Uint32 Painter::getPixel(int x, int y)
 {
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
+    if (!window_surface) return 0;
 
+    if (x < 0 || x >= window_surface->w || y < 0 || y >= window_surface->h) {
+        return 0;
+    }
     int bpp = window_surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to retrieve */
     Uint8 *p = (Uint8 *) window_surface->pixels + y * window_surface->pitch + x * bpp;
-
     switch (bpp)
     {
         case 1:
@@ -426,7 +428,19 @@ void Painter::drawRectangle(Point p1, Point p2, Point p3, Point p4, Color color)
     drawLine(p3, p4, color);
     drawLine(p4, p1, color);
 }
+void Painter::drawRectangle(int x1, int y1, int x2, int y2, Color color) {
+    int minX = std::min(x1, x2);
+    int maxX = std::max(x1, x2);
+    int minY = std::min(y1, y2);
+    int maxY = std::max(y1, y2);
 
+    Point p1(minX, minY);
+    Point p2(maxX, minY);
+    Point p3(maxX, maxY);
+    Point p4(minX, maxY);
+
+    drawRectangle(p1, p2, p3, p4, color);
+}
 void Painter::drawPolygon(list<Point> points, Color color)
 {
     Point primeiro = points.front();
@@ -466,6 +480,11 @@ void Painter::fillRect(int x1, int y1, int x2, int y2, Color color) {
 }
 
 Color Painter::getColorAt(int x, int y) {
+    SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
+    if (!window_surface) return 0;
+    if (x < 0 || x >= window_surface->w || y < 0 || y >= window_surface->h) {
+        return 0;
+    }
     Uint32 pixel = getPixel(x, y);
     Color c = Color();
     Uint8 r = c.getColorComponent(pixel, 'r');

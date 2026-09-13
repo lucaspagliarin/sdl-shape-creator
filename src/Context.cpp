@@ -2,9 +2,9 @@
 
 Context * Context::_instance = nullptr;
 
-Context::Context() : 
-    _window_surface(nullptr), 
-    _pRenderer(nullptr), 
+Context::Context() :
+    _window_surface(nullptr),
+    _pRenderer(nullptr),
     _pFontSurface(nullptr),
     _charWidth(0),
     _charHeight(0),
@@ -53,7 +53,7 @@ SDL_Renderer* Context::getRenderer()
 bool Context::loadBitmapFont(const std::string& bmpPath, int charWidth, int charHeight, int charsPerRow)
 {
     //if (_pRenderer == nullptr) return false;
-    
+
     if (_pFontSurface != nullptr) {
         SDL_FreeSurface(_pFontSurface);
         _pFontSurface = nullptr;
@@ -99,7 +99,7 @@ void Context::drawString(const std::string& text, int x, int y, int scale, Color
     for (char c : text) {
         if (c == '\n') {
             y += _charHeight * scale;
-            currentX = x;            
+            currentX = x;
         } else {
             drawChar(c, currentX, y, scale, color);
             currentX += _charWidth * scale;

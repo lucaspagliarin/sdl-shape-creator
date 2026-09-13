@@ -3,7 +3,7 @@
 #include "Context.h"
 #include "Painter.h"
 #include "math.h"
-
+#include "Utils.h"
 Line::Line()
 {
     //ctor
@@ -29,20 +29,25 @@ Line::Line(Point start, Point end, Color color, int antialias) {
 }
 
 void Line::draw(Painter& p) {
+    this->updateTransform(Utils::midPoint(this->start,this->end));
     p.drawLine(
-        this->start,
-        this->end,
+        Point(transform.apply(this->start)),
+        Point(transform.apply(this->end)),
         this->color,
         this->antialias);
+        if(isSelected())
+        {
+          drawSelectionMarker(p,Point(transform.apply(this->start)));
+          drawSelectionMarker(p,Point(transform.apply(this->end)));
+        }
 }
 
 bool Line::contains(Point p, int tolerance) {
-    return distancePointToSegment(p, this->start, this->end) <= tolerance;
+    return distancePointToSegment(p, this->transform.apply(this->start), this->transform.apply(this->end)) <= tolerance;
 }
 
 void Line::translate(int dx, int dy) {
-    this->start.setX(this->start.getX() + dx);
-    this->start.setY(this->start.getY() + dy);
-    this->end.setX(this->end.getX() + dx);
-    this->end.setY(this->end.getY() + dy);
+   int currentX = this->position.getX() + dx;
+    int currentY = this->position.getY() + dy;
+    this->setPoint(currentX, currentY);
 }

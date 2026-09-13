@@ -38,9 +38,8 @@ Point Rectangle::calculateCentroid(){
 }
 
 void Rectangle::draw(Painter& p) {
-    int centerX = (min.getX() + max.getX()) / 2;
-    int centerY = (min.getY() + max.getY()) / 2;
-    Point pivo(centerX, centerY);
+
+    Point pivo = calculateCentroid();
     this->updateTransform(pivo);
     Point t1 = transform.apply(this->min);
     Point t2 = transform.apply(Point(this->max.getX(), this->min.getY()));
@@ -48,10 +47,9 @@ void Rectangle::draw(Painter& p) {
     Point t4 = transform.apply(Point(this->min.getX(), this->max.getY()));
 
     p.drawRectangle(t1, t2, t3, t4, borderColor);
-    printf("Original min:(%d,%d) -> Transformado t1:(%d,%d)\n", min.getX(), min.getY(), t1.getX(), t1.getY());
 
     if (this->isFilled()) {
-        // Ajustando a cor caso seja igual a da borda.
+
         Color paintColor = fillColor.deSaturateColor(50);
 
         Point centroid = calculateCentroid();
@@ -67,19 +65,23 @@ void Rectangle::draw(Painter& p) {
     }
 
     if (isSelected()) {
-        drawSelectionMarker(p,Point(min.getX(), min.getY()));
-        drawSelectionMarker(p,Point(max.getX(), min.getY()));
-        drawSelectionMarker(p,Point(max.getX(), max.getY()));
-        drawSelectionMarker(p,Point(min.getX(), max.getY()));
+        drawSelectionMarker(p,Point(t1.getX(), t1.getY()));
+        drawSelectionMarker(p,Point(t3.getX(), t1.getY()));
+        drawSelectionMarker(p,Point(t3.getX(), t3.getY()));
+        drawSelectionMarker(p,Point(t1.getX(), t3.getY()));
     }
 }
 
 bool Rectangle::contains(Point p, int tolerance) {
-    Point topLeft(min.getX(), min.getY());
-    Point topRight(max.getX(), min.getY());
-    Point bottomRight(max.getX(), max.getY());
-    Point bottomLeft(min.getX(), max.getY());
 
+    Point pivo = calculateCentroid();
+
+    this->updateTransform(pivo);
+
+    Point topLeft = transform.apply(this->min);
+    Point topRight = transform.apply(Point(this->max.getX(), this->min.getY()));
+    Point bottomRight = transform.apply(this->max);
+    Point bottomLeft = transform.apply(Point(this->min.getX(), this->max.getY()));
     double d1 = distancePointToSegment(p, topLeft, topRight);
     double d2 = distancePointToSegment(p, topRight, bottomRight);
     double d3 = distancePointToSegment(p, bottomRight, bottomLeft);
@@ -94,8 +96,8 @@ bool Rectangle::contains(Point p, int tolerance) {
 }
 
 void Rectangle::translate(int dx, int dy) {
-    this->min.setX(this->min.getX() + dx);
-    this->min.setY(this->min.getY() + dy);
-    this->max.setX(this->max.getX() + dx);
-    this->max.setY(this->max.getY() + dy);
+
+    int currentX = this->position.getX() + dx;
+    int currentY = this->position.getY() + dy;
+    this->setPoint(currentX, currentY);
 }

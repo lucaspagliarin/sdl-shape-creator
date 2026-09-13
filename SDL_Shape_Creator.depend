@@ -551,10 +551,11 @@
 	"Painter.h"
 	"Math.h"
 
-1788981547 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\main.cpp
+1789153281 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\main.cpp
 	<SDL2/SDL.h>
 	<stdio.h>
 	<unistd.h>
+	<vector>
 	<list>
 	<Context.h>
 	<Color.h>
@@ -566,16 +567,19 @@
 	<Circle.h>
 	<Bezier.h>
 	<Shape.h>
+	"Utils.h"
 
-1787851224 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\context.h
+1788982982 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\context.h
 	<SDL2/SDL.h>
+	<string>
+	<Color.h>
 
-1788958647 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\color.h
+1788982982 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\color.h
 	<SDL2/SDL.h>
 
 1788975779 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\point.h
 
-1788976615 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\painter.h
+1789136100 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\painter.h
 	<Point.h>
 	<Color.h>
 	<SDL2/SDL.h>
@@ -585,7 +589,7 @@
 	"Shape.h"
 	<SDL2/SDL.h>
 
-1788980983 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\shape.h
+1789149563 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\shape.h
 	<Point.h>
 	<Color.h>
 	<SDL2/SDL.h>
@@ -599,7 +603,7 @@
 	<list>
 	<memory>
 
-1788973665 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\polygon.h
+1789338460 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\polygon.h
 	"Shape.h"
 	<SDL2/SDL.h>
 	<list>
@@ -614,17 +618,18 @@
 	<SDL2/SDL.h>
 	<list>
 
-1787851224 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\context.cpp
+1789336488 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\context.cpp
 	"Context.h"
 
-1788973763 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\line.cpp
+1789334018 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\line.cpp
 	"Shape.h"
 	"Line.h"
 	"Context.h"
 	"Painter.h"
 	"math.h"
+	"Utils.h"
 
-1788976694 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\painter.cpp
+1789339823 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\painter.cpp
 	"Painter.h"
 	"Point.h"
 	"Context.h"
@@ -636,12 +641,32 @@
 1788975750 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\point.cpp
 	"Point.h"
 
-1788958647 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\utils.cpp
+1789327343 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\utils.cpp
 	"Utils.h"
+	"Context.h"
+	<SDL2/SDL.h>
+	<stdio.h>
+	<unistd.h>
 	<cmath>
+	<string>
+	<chrono>
+	<ctime>
+	<sstream>
+	<iomanip>
 
-1788958647 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\utils.h
-	<Point.h>
+1788982982 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\utils.h
+	"Utils.h"
+	"Context.h"
+	"Point.h"
+	<SDL2/SDL.h>
+	<stdio.h>
+	<unistd.h>
+	<cmath>
+	<string>
+	<chrono>
+	<ctime>
+	<sstream>
+	<iomanip>
 
 1788973597 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\bezier.cpp
 	"Shape.h"
@@ -651,18 +676,18 @@
 	"Painter.h"
 	"math.h"
 
-1788977037 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\circle.cpp
+1789335128 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\circle.cpp
 	"Shape.h"
 	"Circle.h"
 	"Context.h"
 	"Painter.h"
 	"math.h"
 
-1788958647 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\color.cpp
+1788982982 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\color.cpp
 	"Color.h"
 	"Context.h"
 
-1788977172 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\polygon.cpp
+1789339013 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\polygon.cpp
 	"Shape.h"
 	"Polygon.h"
 	"Line.h"
@@ -670,15 +695,17 @@
 	"Painter.h"
 	"Utils.h"
 	"math.h"
+	<list>
+	<iostream>
 
-1788981522 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\shape.cpp
+1789337909 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\shape.cpp
 	"Shape.h"
 	"Context.h"
 	"Painter.h"
 	"math.h"
 	<iostream>
 
-1788980356 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\rectangle.cpp
+1789335534 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\rectangle.cpp
 	"Shape.h"
 	"Rectangle.h"
 	"Line.h"
@@ -688,7 +715,7 @@
 	"math.h"
 	<cstdio>
 
-1788975690 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\transform.cpp
+1789337387 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\src\transform.cpp
 	"Transform.h"
 	"Point.h"
 	<cmath>
