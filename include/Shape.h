@@ -13,7 +13,7 @@ class Shape
     public:
         Shape();
         virtual void draw(Painter& p);
-        virtual bool contains(Point p, int tolerance = 5);
+        virtual bool contains(Point p, int tolerance = 5, bool onlyBorderSelect = true);
         virtual void translate(int dx, int dy);
         void setSelected(bool value);
         bool isSelected();

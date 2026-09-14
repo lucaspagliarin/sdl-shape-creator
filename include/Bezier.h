@@ -13,7 +13,7 @@ class Bezier : public Shape
         Bezier(Point start, Point end, Point anchor1, Point anchor2, Color color);
         Bezier(list<Point> points, Color color);
         void draw(Painter& p) override;
-        bool contains(Point p, int tolerance = 5) override;
+        bool contains(Point p, int tolerance = 5, bool onlyBorderSelect = false) override;
         void translate(int dx, int dy) override;
         virtual ~Bezier();
 

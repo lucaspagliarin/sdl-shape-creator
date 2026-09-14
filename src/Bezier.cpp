@@ -41,6 +41,8 @@ Bezier::Bezier(list<Point> points, Color color) {
 
 void Bezier::draw(Painter& p) {
 
+
+
     p.drawBezier(
         this->start,
         this->end,
@@ -48,17 +50,21 @@ void Bezier::draw(Painter& p) {
         this->anchor2,
         color);
 
+    
+    if (isSelected()) {
 
-    p.drawCircle(this->start, 5, color);
-    p.drawCircle(this->end, 5, color);
-    p.drawCircle(this->anchor1, 5, color);
-    p.drawCircle(this->anchor2, 5, color);
+        p.drawCircle(this->start, 5, color.deSaturateColor(-100));
+        p.drawCircle(this->end, 5, color.deSaturateColor(-100));
+        p.drawCircle(this->anchor1, 5, color.deSaturateColor(-100));
+        p.drawCircle(this->anchor2, 5, color.deSaturateColor(-100));
 
-    p.drawLine(this->start, this->anchor1, color, 1);
-    p.drawLine(this->end, this->anchor2, color, 1);
+        p.drawLine(this->start, this->anchor1, color.deSaturateColor(-100), 1);
+        p.drawLine(this->end, this->anchor2, color.deSaturateColor(-100), 1);
+
+    }
 }
 
-bool Bezier::contains(Point p, int tolerance) {
+bool Bezier::contains(Point p, int tolerance, bool onlyBorderSelect) {
     double minDist = -1;
 
     // amostra a curva com a mesma equacao parametrica usada para desenha-la

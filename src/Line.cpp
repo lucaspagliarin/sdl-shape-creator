@@ -42,7 +42,7 @@ void Line::draw(Painter& p) {
         }
 }
 
-bool Line::contains(Point p, int tolerance) {
+bool Line::contains(Point p, int tolerance, bool onlyBorderSelect) {
     return distancePointToSegment(p, this->transform.apply(this->start), this->transform.apply(this->end)) <= tolerance;
 }
 

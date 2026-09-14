@@ -24,7 +24,7 @@ void Shape::draw(Painter& p){
     std::cout << "Desenhando..." << std::endl;
 }
 
-bool Shape::contains(Point p, int tolerance) {
+bool Shape::contains(Point p, int tolerance, bool onlyBorderSelect) {
     // subclasses devem sobrescrever com o hit-test geometrico correto
     return false;
 }

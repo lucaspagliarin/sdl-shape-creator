@@ -12,7 +12,7 @@ class Circle : public Shape
         Circle();
         Circle(Point center, int radius, Color color);
         void draw(Painter& p) override;
-        bool contains(Point p, int tolerance = 5) override;
+        bool contains(Point p, int tolerance = 5, bool onlyBorderSelect = false) override;
         void translate(int dx, int dy) override;
         virtual ~Circle();
 

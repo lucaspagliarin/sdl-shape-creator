@@ -12,7 +12,7 @@ class Rectangle : public Shape
         Rectangle();
         Rectangle(Point min, Point max, Color color);
         void draw(Painter& p) override;
-        bool contains(Point p, int tolerance = 5) override;
+        bool contains(Point p, int tolerance = 5, bool onlyBorderSelect = false) override;
         void translate(int dx, int dy) override;
         virtual ~Rectangle();
 
@@ -23,6 +23,7 @@ class Rectangle : public Shape
         Point min;
         Point max;
         Point calculateCentroid();
+        Point calculateFillPoint();
 };
 
 #endif // RECTANGLE_H

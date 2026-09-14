@@ -63,10 +63,10 @@ void deselectAll() {
     selectedShape = nullptr;
 }
 
-bool trySelectShapeAt(int x, int y) {
+bool trySelectShapeAt(int x, int y, bool onlyBorderSelect = true) {
     Point clicked(x, y);
     for (auto it = shapes.rbegin(); it != shapes.rend(); ++it) {
-        if ((*it)->contains(clicked, 5)) {
+        if ((*it)->contains(clicked, 5, onlyBorderSelect)) {
             deselectAll();
             (*it)->setSelected(true);
             selectedShape = it->get();
@@ -236,6 +236,7 @@ void cancelPendingShape() {
 }
 
 bool showToolText = false;
+bool showUI = true;
 
 void drawToolInfo(string name){
     const int TEXT_BOX_WIDTH = 210;
@@ -347,7 +348,7 @@ void handleCanvasClick(int x, int y, Uint8 button) {
 
     if (currentTool == TOOL_FILL) {
         if (button != SDL_BUTTON_LEFT) return;
-        if (trySelectShapeAt(x, y)) {
+        if (trySelectShapeAt(x, y, false)) {
             selectedShape->setFill(currentColor);
         } else {
             windowColor = currentColor;
@@ -484,15 +485,15 @@ void display()
     }
 
     drawPreview();
-    drawToolBox();
-    if (currentTool == TOOL_COLOR) {
-        drawColors();
-    }
 
-    if (showToolText) {
-
-        drawToolInfo(toolboxEntries[currentTool].name);
-
+    if (showUI) {
+        drawToolBox();
+        if (currentTool == TOOL_COLOR) {
+            drawColors();
+        }
+        if (showToolText) {
+            drawToolInfo(toolboxEntries[currentTool].name);
+        }
     }
 }
 
@@ -656,28 +657,62 @@ int main(int argc, char* args[])
                         break;
                     case SDLK_ESCAPE: cancelPendingShape(); break;
                     case SDLK_PLUS:
+                    case SDLK_UP:
                     case SDLK_KP_PLUS: // Tecla '+' (Aumenta a escala)
                         if (selectedShape) {
-                            selectedShape->setScale(selectedShape->getScaleX()+0.1,selectedShape->getScaleY()+0.1 ); // Aumenta 10%
+                            if (event.key.keysym.mod & KMOD_ALT) {
+                                if (event.key.keysym.mod & KMOD_SHIFT) {
+                                    selectedShape->translate(0,-50);
+                                } else {
+                                    selectedShape->translate(0,-5);
+                                }
+                            } else {
+                                selectedShape->setScale(selectedShape->getScaleX()+0.1,selectedShape->getScaleY()+0.1 ); // Aumenta 10%
+                            }
                         }
                         break;
 
                     case SDLK_MINUS:
+                    case SDLK_DOWN:
                     case SDLK_KP_MINUS: // Tecla '-' (Diminui a escala)
                         if (selectedShape) {
-                            selectedShape->setScale(selectedShape->getScaleX()-0.1,selectedShape->getScaleY()-0.1); // Diminui 10%
+                            if (event.key.keysym.mod & KMOD_ALT) {
+                                if (event.key.keysym.mod & KMOD_SHIFT) {
+                                    selectedShape->translate(0,50);
+                                } else {
+                                    selectedShape->translate(0,5);
+                                }
+                            } else {
+                                selectedShape->setScale(selectedShape->getScaleX()-0.1,selectedShape->getScaleY()-0.1); // Diminui 10%
+                            }
                         }
                         break;
 
                     case SDLK_LEFT: // Seta para esquerda (Rotaciona -5 graus)
                         if (selectedShape) {
-
+                            if (event.key.keysym.mod & KMOD_ALT) {
+                                if (event.key.keysym.mod & KMOD_SHIFT) {
+                                    selectedShape->translate(-50,0);
+                                } else {
+                                    selectedShape->translate(-5,0);
+                                }
+                            } else {
+                                selectedShape->setAngle(selectedShape->getAngle() - 5);
+                            }
                         }
                         break;
 
                     case SDLK_RIGHT: // Seta para direita (Rotaciona +5 graus)
                         if (selectedShape) {
-                            // selectedShape->rotate(5);
+                            if (event.key.keysym.mod & KMOD_ALT) {
+                                if (event.key.keysym.mod & KMOD_SHIFT) {
+                                    selectedShape->translate(50,0);
+                                } else {
+                                    selectedShape->translate(5,0);
+                                }
+                            } else {
+                                selectedShape->setAngle(selectedShape->getAngle() + 5);
+                            }
                         }
                         break;
                     // paleta de cores basica (Fase 3 - pode crescer depois)

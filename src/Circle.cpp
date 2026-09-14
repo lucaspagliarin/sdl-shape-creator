@@ -49,14 +49,22 @@ void Circle::draw(Painter& p) {
     }
 }
 
-bool Circle::contains(Point p, int tolerance) {
+bool Circle::contains(Point p, int tolerance, bool onlyBorderSelect) {
     double dx = p.getX() - this->transform.apply(this->center).getX();
     double dy = p.getY() - this->transform.apply(this->center).getY();
     double dist = sqrt(dx * dx + dy * dy);
 
     // o circulo e preenchido (flood-fill), entao qualquer pixel
     // dentro do raio (+ tolerancia) faz parte do objeto
-    return dist <= ((int)(this->radius * this->getScaleX())) + tolerance;
+    if (onlyBorderSelect && !isFilled()){
+
+        return dist <= ((int)(this->radius * this->getScaleX())) + tolerance &&
+                dist >= ((int)(this->radius * this->getScaleX())) - tolerance;
+        
+    } else {
+        return dist <= ((int)(this->radius * this->getScaleX())) + tolerance;
+    }
+
 }
 
 void Circle::translate(int dx, int dy) {

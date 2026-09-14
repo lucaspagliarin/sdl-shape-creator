@@ -52,35 +52,55 @@ void Polygon::draw(Painter& p) {
 
     }
 
-    p.drawCircle(centroidatual, 5, Color(255,0,0));
+    
 
     if (isSelected()) {
         for (Point& pt : pontosDraw) {
             drawSelectionMarker(p,pt);
         }
+        p.drawCircle(centroidatual, 5, Color(255,0,255));
 }}
 
-bool Polygon::contains(Point p, int tolerance) {
+bool Polygon::contains(Point p, int tolerance, bool onlyBorderSelect) {
     if (this->points.size() < 2) return false;
 
-   this->updateTransform(this->initialCentroid);
+    this->updateTransform(this->initialCentroid);
 
-    list<Point> pontosDraw;
+    vector<Point> pontosDraw;
     for (const Point& pt : this->points) {
-        Point ptTransformado = this->transform.apply(pt);
-        pontosDraw.push_back(ptTransformado);
+        pontosDraw.push_back(this->transform.apply(pt));
     }
 
-    double minDist = -1;
-    Point previous = pontosDraw.back();
+    if (onlyBorderSelect && !isFilled()) {
+        double minDist = -1;
+        Point previous = pontosDraw.back();
 
-    for (const Point& current : pontosDraw) {
-        double d = distancePointToSegment(p, previous, current);
-        if (minDist < 0 || d < minDist) minDist = d;
-        previous = current;
+        for (const Point& current : pontosDraw) {
+            double d = distancePointToSegment(p, previous, current);
+            if (minDist < 0 || d < minDist) minDist = d;
+            previous = current;
+        }
+
+        return minDist >= 0 && minDist <= tolerance;
+    } else {
+        // Point-in-polygon via ray casting (crossing number / even-odd rule):
+        // conta quantas arestas do poligono uma semirreta horizontal
+        // partindo de p cruza. Numero impar de cruzamentos = ponto dentro.
+        bool inside = false;
+        size_t n = pontosDraw.size();
+
+        for (size_t i = 0, j = n - 1; i < n; j = i++) {
+            double xi = pontosDraw[i].getX(), yi = pontosDraw[i].getY();
+            double xj = pontosDraw[j].getX(), yj = pontosDraw[j].getY();
+
+            bool intersect = ((yi > p.getY()) != (yj > p.getY())) &&
+                              (p.getX() < (xj - xi) * (p.getY() - yi) / (yj - yi) + xi);
+
+            if (intersect) inside = !inside;
+        }
+
+        return inside;
     }
-
-    return minDist >= 0 && minDist <= tolerance;
 }
 
 

@@ -487,6 +487,7 @@ Color Painter::getColorAt(int x, int y) {
 }
 
 void Painter::floodFill(int x, int y, Color newColor, Color oldColor){
+    if (newColor.getColor() == oldColor.getColor()) return;
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
 
     if (y < 0 || y > window_surface->h - 1 || x < 0 || x > window_surface->w - 1){
