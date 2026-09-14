@@ -31,13 +31,6 @@ void Painter::setPixel(int x, int y, Color color) {
 	this->setPixel(x, y, color.getR(),color.getG(),color.getB());
 }
 
-/*
-void Painter::setPixel(int x, int y, int r, int g, int b) {
-    SDL_Renderer * pRenderer = Context::getInstance()->getRenderer();
-	SDL_SetRenderDrawColor(pRenderer, r, g, b, 255);
-	SDL_RenderDrawPoint(pRenderer, x, y);
-}
-*/
 
 void Painter::setPixel(int x, int y, int r, int g, int b) {
     setPixel(x, y, r, g, b, 255);
@@ -108,22 +101,21 @@ Uint32 Painter::getPixel(int x, int y)
                 break;
 
             default:
-                return 0;       /* shouldn't happen, but avoids warnings */
+                return 0;
       }
 }
 
 void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
 {
 
-    /* Make sure the line runs top to bottom */
+
     if (y0 > y1)
     {
         int aux = y0; y0 = y1; y1 = aux;
         aux = x0; x0 = x1; x1 = aux;
     }
 
-    /* Draw the initial pixel, which is always exactly intersected by
-    the line and so needs no weighting */
+
     setPixel( x0, y0, color );
 
     int xDir, deltaX = x1 - x0;
@@ -134,16 +126,13 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
     else
     {
         xDir   = -1;
-        deltaX = 0 - deltaX; /* make deltaX positive */
+        deltaX = 0 - deltaX;
     }
 
-    /* Special-case horizontal, vertical, and diagonal lines, which
-    require no weighting because they go right through the center of
-    every pixel */
     int deltaY = y1 - y0;
     if (deltaY == 0)
     {
-        /* Horizontal line */
+
         while (deltaX-- != 0)
         {
             x0 += xDir;
@@ -153,7 +142,7 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
     }
     if (deltaX == 0)
     {
-        /* Vertical line */
+
         do
         {
             y0++;
@@ -164,7 +153,7 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
 
     if (deltaX == deltaY)
     {
-        /* Diagonal line */
+
         do
         {
             x0 += xDir;
@@ -177,8 +166,7 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
     unsigned short errorAdj;
     unsigned short errorAccaux, weighting;
 
-    /* Line is not horizontal, diagonal, or vertical */
-    unsigned short errorAcc = 0;  /* initialize the line error accumulator to 0 */
+    unsigned short errorAcc = 0;
 
 
 
@@ -187,32 +175,24 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
     Uint32 bl = color.getB();
     double grayl = rl * 0.299 + gl * 0.587 + bl * 0.114;
 
-    /* Is this an X-major or Y-major line? */
+
     if (deltaY > deltaX)
     {
-    /* Y-major line; calculate 16-bit fixed-point fractional part of a
-    pixel that X advances each time Y advances 1 pixel, truncating the
-        result so that we won't overrun the endpoint along the X axis */
+
         errorAdj = ((unsigned long) deltaX << 16) / (unsigned long) deltaY;
-        /* Draw all pixels other than the first and last */
+
         while (--deltaY) {
-            errorAccaux = errorAcc;   /* remember currrent accumulated error */
-            errorAcc += errorAdj;      /* calculate error for next pixel */
+            errorAccaux = errorAcc;
+            errorAcc += errorAdj;
             if (errorAcc <= errorAccaux) {
-                /* The error accumulator turned over, so advance the X coord */
+
                 x0 += xDir;
             }
-            y0++; /* Y-major, so always advance Y */
-                  /* The IntensityBits most significant bits of errorAcc give us the
-                  intensity weighting for this pixel, and the complement of the
-            weighting for the paired pixel */
+            y0++;
             weighting = errorAcc >> 8;
-            /*
-            ASSERT( weighting < 256 );
-            ASSERT( ( weighting ^ 255 ) < 256 );
-            */
+
             Uint32 clrBackGround = getPixel(x0, y0 );
-            //clrBackGround = RGB(255, 255, 255);
+
             Uint8 rb = color.getColorComponent(clrBackGround,'r');
             Uint8 gb = color.getColorComponent(clrBackGround,'g');
             Uint8 bb = color.getColorComponent(clrBackGround,'b');
@@ -224,7 +204,7 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
             setPixel( x0, y0, color.getColor( rr, gr, br ) );
 
             clrBackGround = getPixel(x0 + xDir, y0 );
-            //clrBackGround = RGB(255, 255, 255);
+
             rb = color.getColorComponent( clrBackGround, 'r' );
             gb = color.getColorComponent( clrBackGround, 'g' );
             bb = color.getColorComponent( clrBackGround, 'b' );
@@ -235,34 +215,25 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
             br = ( bb > bl ? ( ( Uint8 )( ( ( double )( grayl<grayb?(weighting ^ 255):weighting) ) / 255.0 * ( bb - bl ) + bl ) ) : ( ( Uint8 )( ( ( double )( grayl<grayb?(weighting ^ 255):weighting) ) / 255.0 * ( bl - bb ) + bb ) ) );
             setPixel( x0 + xDir, y0, color.RGB( rr, gr, br ) );
         }
-        /* Draw the final pixel, which is always exactly intersected by the line
-        and so needs no weighting */
+
         setPixel( x1, y1, color );
         return;
     }
-    /* It's an X-major line; calculate 16-bit fixed-point fractional part of a
-    pixel that Y advances each time X advances 1 pixel, truncating the
-    result to avoid overrunning the endpoint along the X axis */
+
     errorAdj = ((unsigned long) deltaY << 16) / (unsigned long) deltaX;
-    /* Draw all pixels other than the first and last */
+
     while (--deltaX) {
-        errorAccaux = errorAcc;   /* remember currrent accumulated error */
-        errorAcc += errorAdj;      /* calculate error for next pixel */
+        errorAccaux = errorAcc;
+        errorAcc += errorAdj;
         if (errorAcc <= errorAccaux) {
-            /* The error accumulator turned over, so advance the Y coord */
+
             y0++;
         }
-        x0 += xDir; /* X-major, so always advance X */
-                    /* The IntensityBits most significant bits of errorAcc give us the
-                    intensity weighting for this pixel, and the complement of the
-        weighting for the paired pixel */
+        x0 += xDir;
         weighting = errorAcc >> 8;
-        /*
-        ASSERT( weighting < 256 );
-        ASSERT( ( weighting ^ 255 ) < 256 );
-        */
+
         Uint32 clrBackGround = getPixel(x0, y0 );
-        //clrBackGround = RGB(255, 255, 255);
+
         Uint8 rb = color.getColorComponent( clrBackGround, 'r' );
         Uint8 gb = color.getColorComponent( clrBackGround, 'g' );
         Uint8 bb = color.getColorComponent( clrBackGround, 'b' );
@@ -275,7 +246,7 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
         setPixel( x0, y0, color.RGB( rr, gr, br ) );
 
         clrBackGround = getPixel(x0, y0 + 1 );
-        //clrBackGround = RGB(255, 255, 255);
+
         rb = color.getColorComponent( clrBackGround, 'r' );
         gb = color.getColorComponent( clrBackGround, 'g' );
         bb = color.getColorComponent( clrBackGround, 'b' );
@@ -288,8 +259,7 @@ void Painter::drawWuLine(int x0, int y0, int x1, int y1, Color color )
         setPixel( x0, y0 + 1, color.RGB( rr, gr, br ) );
     }
 
-    /* Draw the final pixel, which is always exactly intersected by the line
-    and so needs no weighting */
+
     setPixel( x1, y1, color );
 }
 

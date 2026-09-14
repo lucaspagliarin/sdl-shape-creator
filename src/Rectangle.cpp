@@ -30,7 +30,7 @@ Rectangle::Rectangle(Point min, Point max, Color color) {
 
     this->borderColor = color;
 }
-
+//calcula centroide
 Point Rectangle::calculateCentroid(){
     int cx = (this->min.getX() + this->max.getX()) / 2.0;
     int cy = (this->min.getY() + this->max.getY()) / 2.0;
@@ -40,21 +40,22 @@ Point Rectangle::calculateCentroid(){
 Point Rectangle::calculateFillPoint(){
     Point t1 = transform.apply(this->min);
     Point t2 = transform.apply(this->max);
-    
+
     int cx = (t1.getX() + t2.getX()) / 2.0;
     int cy = (t1.getY() + t2.getY()) / 2.0;
     return Point{cx, cy};
 }
-
+//metodo de desenho
 void Rectangle::draw(Painter& p) {
-
     Point pivo = calculateCentroid();
+    //atualiza a matriz
     this->updateTransform(pivo);
+    //aplica todos pontos na matriz
     Point t1 = transform.apply(this->min);
     Point t2 = transform.apply(Point(this->max.getX(), this->min.getY()));
     Point t3 = transform.apply(this->max);
     Point t4 = transform.apply(Point(this->min.getX(), this->max.getY()));
-
+    //desenha
     p.drawRectangle(t1, t2, t3, t4, borderColor);
 
     if (this->isFilled()) {
@@ -67,8 +68,7 @@ void Rectangle::draw(Painter& p) {
         Point inner2 = Utils::getInstance()->midPoint(max, pivo);
 
         p.floodFill(calculateFillPoint().getX(), calculateFillPoint().getY(), paintColor, oldColor);
-        // p.floodFill(inner1.getX(), inner1.getY(), paintColor, oldColor);
-        // p.floodFill(inner2.getX(), inner2.getY(), paintColor, oldColor);
+
     }
 
     if (isSelected()) {
@@ -100,7 +100,7 @@ bool Rectangle::contains(Point p, int tolerance, bool onlyBorderSelect) {
         if (d2 < minDist) minDist = d2;
         if (d3 < minDist) minDist = d3;
         if (d4 < minDist) minDist = d4;
-        
+
         return minDist <= tolerance;
     } else {
         if (p.getX() >= topLeft.getX() && p.getX() <= bottomRight.getX() &&
@@ -110,7 +110,7 @@ bool Rectangle::contains(Point p, int tolerance, bool onlyBorderSelect) {
         return false;
     }
 
-    
+
 }
 
 void Rectangle::translate(int dx, int dy) {

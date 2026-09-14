@@ -21,16 +21,15 @@ Shape::~Shape()
 
 void Shape::draw(Painter& p){
     // override
-    std::cout << "Desenhando..." << std::endl;
 }
 
 bool Shape::contains(Point p, int tolerance, bool onlyBorderSelect) {
-    // subclasses devem sobrescrever com o hit-test geometrico correto
+
     return false;
 }
 
 void Shape::translate(int dx, int dy) {
-    // subclasses devem sobrescrever movendo seus pontos internos
+
 }
 
 void Shape::setSelected(bool value) {
@@ -93,7 +92,6 @@ void Shape::setScale(double sx, double sy)
 }
 void Shape::setPoint(int x, int y)
 {
-    std::cout << "[SETPOINT] Novo position -> x: " << x << ", y: " << y << std::endl;
     this->position= Point(x,y);
 }
 void Shape::updateTransform(Point pivot) {
