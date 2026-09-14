@@ -33,10 +33,8 @@ void Polygon::draw(Painter& p) {
 
     list<Point> pontosDraw;
   for (const Point& pt : this->points) {
-        // Aplica a matriz de transforma��o no ponto atual
-        Point ptTransformado = this->transform.apply(pt);
 
-        // Coloca o novo ponto transformado na nova lista
+        Point ptTransformado = this->transform.apply(pt);
         pontosDraw.push_back(ptTransformado);
     }
     Point centroidatual = this->transform.apply(this->initialCentroid);
@@ -84,9 +82,7 @@ bool Polygon::contains(Point p, int tolerance, bool onlyBorderSelect) {
 
         return minDist >= 0 && minDist <= tolerance;
     } else {
-        // Point-in-polygon via ray casting (crossing number / even-odd rule):
-        // conta quantas arestas do poligono uma semirreta horizontal
-        // partindo de p cruza. Numero impar de cruzamentos = ponto dentro.
+
         bool inside = false;
         size_t n = pontosDraw.size();
 
@@ -114,47 +110,40 @@ void Polygon::translate(int dx, int dy) {
 Point Polygon::calculateCentroid() {
     size_t n = this->points.size();
 
-    // A valid polygon needs at least 3 vertices
     if (n < 3) {
-        return Point{0, 0}; // Or handle according to your Point constructor
+        return Point{0, 0};
     }
 
     int cx = 0;
     int cy = 0;
     double signedArea = 0.0;
 
-    // Use iterators to traverse the std::list
     auto current = this->points.begin();
 
     for (size_t i = 0; i < n; ++i) {
-        // Get the next iterator, wrap around to the beginning if at the end
+
         auto next = current;
         std::advance(next, 1);
         if (next == this->points.end()) {
             next = this->points.begin();
         }
 
-        double x0 = current->getX(); // Assuming Point has public fields x and y
+        double x0 = current->getX();
         double y0 = current->getY();
         double x1 = next->getX();
         double y1 = next->getY();
 
-
-        // Shoelace formula component
         double a = (x0 * y1) - (x1 * y0);
         signedArea += a;
 
         cx += (x0 + x1) * a;
         cy += (y0 + y1) * a;
 
-        // Move to the next point in the list
         ++current;
     }
 
     signedArea *= 0.5;
 
-
-    // Check to avoid division by zero if the polygon is a straight line
     if (std::abs(signedArea) < 1e-9) {
         return Point{0, 0};
     }
@@ -162,6 +151,5 @@ Point Polygon::calculateCentroid() {
     cx /= (6.0 * signedArea);
     cy /= (6.0 * signedArea);
 
-    // Return the calculated center as a new Point object
     return Point{cx, cy};
 }

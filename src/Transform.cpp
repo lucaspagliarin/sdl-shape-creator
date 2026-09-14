@@ -7,7 +7,7 @@ Transform::~Transform()
 {
     //dtor
 }
-
+//transforma em matriz identidade
 void Transform::setIdentity(float matrix[3][3]) {
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
@@ -23,13 +23,14 @@ Transform::Transform()
     setIdentity(mScale);
     setIdentity(mFinal);
 }
-
+//matriz de translação
 void Transform::setTranslation(Point& position)
 {
     setIdentity(mTranslation);
     mTranslation[0][2] = position.getX();
     mTranslation[1][2] = position.getY();
 }
+//matriz de rotação
 void Transform::setRotation(float angleDegrees) {
     setIdentity(mRotation);
     float rad = angleDegrees * (M_PI / 180.0f);
@@ -39,11 +40,13 @@ void Transform::setRotation(float angleDegrees) {
     mRotation[0][0] = cosA;  mRotation[0][1] = -sinA;
     mRotation[1][0] = sinA;  mRotation[1][1] =  cosA;
 }
+//matriz de escala
 void Transform::setScale(float sx, float sy) {
     setIdentity(mScale);
     mScale[0][0] = sx;
     mScale[1][1] = sy;
 }
+//multiplica matriz
 static void multiply3x3(const float A[3][3], const float B[3][3], float out[3][3]) {
     float temp[3][3];
     for (int i = 0; i < 3; ++i) {
@@ -58,7 +61,7 @@ static void multiply3x3(const float A[3][3], const float B[3][3], float out[3][3
         for (int j = 0; j < 3; ++j)
             out[i][j] = temp[i][j];
 }
-
+//cria uma matriz final composta que contem rotação,translação e escala
 void Transform::computeFinalMatrix(Point pivot, Point position) {
 
     float toOrigin[3][3];
@@ -78,6 +81,7 @@ void Transform::computeFinalMatrix(Point pivot, Point position) {
     multiply3x3(mRotation, temp1, temp2);
     multiply3x3(backFromOrigin, temp2, mFinal);
 }
+//faz a multiplicação dos pontos x,y pela matriz final
 Point Transform::apply(const Point& p) {
     float x = p.getX();
     float y = p.getY();

@@ -715,7 +715,6 @@ int main(int argc, char* args[])
                             }
                         }
                         break;
-                    // paleta de cores basica (Fase 3 - pode crescer depois)
                     case SDLK_1: selectColor(colorPickerOptions[0].color); break; // preto
                     case SDLK_2: selectColor(colorPickerOptions[1].color); break; // vermelho
                     case SDLK_3: selectColor(colorPickerOptions[2].color); break; // verde

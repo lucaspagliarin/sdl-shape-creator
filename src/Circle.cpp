@@ -54,13 +54,12 @@ bool Circle::contains(Point p, int tolerance, bool onlyBorderSelect) {
     double dy = p.getY() - this->transform.apply(this->center).getY();
     double dist = sqrt(dx * dx + dy * dy);
 
-    // o circulo e preenchido (flood-fill), entao qualquer pixel
-    // dentro do raio (+ tolerancia) faz parte do objeto
+
     if (onlyBorderSelect && !isFilled()){
 
         return dist <= ((int)(this->radius * this->getScaleX())) + tolerance &&
                 dist >= ((int)(this->radius * this->getScaleX())) - tolerance;
-        
+
     } else {
         return dist <= ((int)(this->radius * this->getScaleX())) + tolerance;
     }
