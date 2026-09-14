@@ -64,9 +64,6 @@ void Rectangle::draw(Painter& p) {
 
         Color oldColor = p.getColorAt(pivo.getX(), pivo.getY());
 
-        Point inner1 = Utils::getInstance()->midPoint(min, pivo);
-        Point inner2 = Utils::getInstance()->midPoint(max, pivo);
-
         p.floodFill(calculateFillPoint().getX(), calculateFillPoint().getY(), paintColor, oldColor);
 
     }
@@ -103,11 +100,26 @@ bool Rectangle::contains(Point p, int tolerance, bool onlyBorderSelect) {
 
         return minDist <= tolerance;
     } else {
-        if (p.getX() >= topLeft.getX() && p.getX() <= bottomRight.getX() &&
-            p.getY() <= bottomRight.getY() && p.getY() >= topLeft.getY()) {
-            return true;
-        }
-        return false;
+
+        auto isInsideTriangle = [](Point pt, Point A, Point B, Point C) {
+            auto cross = [](Point p1, Point p2, Point p3) {
+                return (p3.getX() - p1.getX()) * (p2.getY() - p1.getY()) - (p2.getX() - p1.getX()) * (p3.getY() - p1.getY());
+            };
+
+            float d1 = cross(A, B, pt);
+            float d2 = cross(B, C, pt);
+            float d3 = cross(C, A, pt);
+
+            bool hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+            bool hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+
+            return !(hasNeg && hasPos);
+        };
+
+        bool inTri1 = isInsideTriangle(p, topLeft, topRight, bottomRight);
+        bool inTri2 = isInsideTriangle(p, topLeft, bottomRight, bottomLeft);
+
+        return inTri1 || inTri2;
     }
 
 
