@@ -54,6 +54,7 @@
 		<Unit filename="include/Rectangle.h" />
 		<Unit filename="include/Shape.h" />
 		<Unit filename="include/Transform.h" />
+		<Unit filename="include/UserInterface." />
 		<Unit filename="include/Utils.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Bezier.cpp" />

@@ -103,11 +103,20 @@ bool Rectangle::contains(Point p, int tolerance, bool onlyBorderSelect) {
 
         return minDist <= tolerance;
     } else {
-        if (p.getX() >= topLeft.getX() && p.getX() <= bottomRight.getX() &&
-            p.getY() <= bottomRight.getY() && p.getY() >= topLeft.getY()) {
-            return true;
+        Point corners[4] = { topLeft, topRight, bottomRight, bottomLeft };
+        bool inside = false;
+
+        for (int i = 0, j = 3; i < 4; j = i++) {
+            double xi = corners[i].getX(), yi = corners[i].getY();
+            double xj = corners[j].getX(), yj = corners[j].getY();
+
+            bool intersect = ((yi > p.getY()) != (yj > p.getY())) &&
+                              (p.getX() < (xj - xi) * (p.getY() - yi) / (yj - yi) + xi);
+
+            if (intersect) inside = !inside;
         }
-        return false;
+
+        return inside;
     }
 
 

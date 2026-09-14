@@ -21,16 +21,17 @@
 using namespace std;
 
 
-
-// SDL stuff
+// Configurações de SDL
 SDL_Window* pWindow = nullptr;
 SDL_Renderer* pRenderer = nullptr;
 SDL_Surface * window_surface = nullptr;
 
+
+// Lista de Formas
 list<unique_ptr<Shape>> shapes;
 
-Color windowColor = Color(255,255,255);
 
+// Variáveis de ferramentas
 enum ToolType {
     TOOL_LINE,
     TOOL_RECTANGLE,
@@ -41,22 +42,79 @@ enum ToolType {
     TOOL_SELECT,
     TOOL_COLOR,
 };
+
 const int TOOL_COUNT = 8;
 
 ToolType previousTool = TOOL_SELECT;
 ToolType currentTool = TOOL_SELECT;
-Color currentColor = Color(0, 0, 0);
+
+// Variáveis de Cor
+
+struct ColorPicker {
+    string name;
+    Color color;
+    char shortcut;
+};
+
+const int COLOR_COUNT = 5;
+
+ColorPicker colorPickerOptions[COLOR_COUNT] = {
+    { "Black", Color(20, 20, 20), '1' },
+    { "Red", Color(220, 30, 30), '2' },
+    { "Green", Color(30, 140, 30), '3' },
+    { "Blue", Color(30, 60, 220), '4' },
+    { "White", Color(255, 255, 255), '5' },
+};
+
+Color windowColor = colorPickerOptions[4].color; // branco
+
+Color currentColor = colorPickerOptions[0].color; // preto
+
+
+// Configuraçoes da ToolBox
+
+const int TOOLBOX_HEIGHT = 50;
+const int TOOLBOX_BOX_SIZE = 40;
+const int TOOLBOX_GAP = 8;
+const int TOOLBOX_MARGIN = 10;
+const int TOOLBOX_PADDING = 8;
+
+struct ToolBoxEntry {
+    ToolType tool;
+    string name;
+    Color color;
+    char shortcut;
+};
+
+ToolBoxEntry toolboxEntries[TOOL_COUNT] = {
+    { TOOL_LINE,        "Line",     Color(120, 120, 120), 'L' },
+    { TOOL_RECTANGLE,   "Rectangle",Color(60, 120, 220),  'R' },
+    { TOOL_CIRCLE,      "Circle",   Color(60, 180, 90),   'C' },
+    { TOOL_POLYGON,     "Polygon",  Color(230, 140, 40),  'P' },
+    { TOOL_BEZIER,      "Bezier",   Color(160, 70, 200),  'B' },
+    { TOOL_FILL,        "Fill",     Color(230, 210, 40),  'F' },
+    { TOOL_SELECT,      "Select",   Color(40, 40, 40),    'S' },
+    { TOOL_COLOR,       "Color Picker", currentColor ,'I' },
+};
+
+
+
+// Selector
 
 vector<Point> pendingPoints;
 
 int mouseX = 0, mouseY = 0;
 
-
-// Selector
-
 Shape* selectedShape = nullptr;
 bool draggingShape = false;
 int dragLastX = 0, dragLastY = 0;
+
+// Flags de ambiente
+
+bool showToolText = false;
+bool showUI = true;
+
+// Seleção de Shapes
 
 void deselectAll() {
     for (auto& s : shapes) s->setSelected(false);
@@ -89,49 +147,8 @@ void deleteSelectedShape() {
     draggingShape = false;
 }
 
-// Configuraçoes da ToolBox
+// Funções de User Interface
 
-const int TOOLBOX_HEIGHT = 50;
-const int TOOLBOX_BOX_SIZE = 40;
-const int TOOLBOX_GAP = 8;
-const int TOOLBOX_MARGIN = 10;
-const int TOOLBOX_PADDING = 8;
-
-struct ToolBoxEntry {
-    ToolType tool;
-    string name;
-    Color color;
-    char shortcut;
-};
-
-ToolBoxEntry toolboxEntries[TOOL_COUNT] = {
-    { TOOL_LINE,        "Line",     Color(120, 120, 120), 'L' },
-    { TOOL_RECTANGLE,   "Rectangle",Color(60, 120, 220),  'R' },
-    { TOOL_CIRCLE,      "Circle",   Color(60, 180, 90),   'C' },
-    { TOOL_POLYGON,     "Polygon",  Color(230, 140, 40),  'P' },
-    { TOOL_BEZIER,      "Bezier",   Color(160, 70, 200),  'B' },
-    { TOOL_FILL,        "Fill",     Color(230, 210, 40),  'F' },
-    { TOOL_SELECT,      "Select",   Color(40, 40, 40),    'S' },
-    { TOOL_COLOR,       "Color Picker", currentColor ,'I' },
-};
-
-struct ColorPicker {
-    string name;
-    Color color;
-    char shortcut;
-};
-
-const int COLOR_COUNT = 5;
-
-ColorPicker colorPickerOptions[COLOR_COUNT] = {
-    { "Black", Color(20, 20, 20), '1' },
-    { "Red", Color(220, 30, 30), '2' },
-    { "Green", Color(30, 140, 30), '3' },
-    { "Blue", Color(30, 60, 220), '4' },
-    { "White", Color(255, 255, 255), '5' },
-};
-
-// devolve os limites (x1,y1,x2,y2) da i-ésima caixa da toolbox
 void getToolBoxRect(int i, int &x1, int &y1, int &x2, int &y2) {
     x1 = TOOLBOX_MARGIN + i * (TOOLBOX_BOX_SIZE + TOOLBOX_GAP);
     y1 = TOOLBOX_MARGIN;
@@ -139,7 +156,6 @@ void getToolBoxRect(int i, int &x1, int &y1, int &x2, int &y2) {
     y2 = y1 + TOOLBOX_BOX_SIZE;
 }
 
-// devolve os limites (x1,y1,x2,y2) da i-ésima caixa da toolbox
 void getToolBoxColorPickerRect(int &x1, int &y1, int &x2, int &y2) {
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
     x1 = window_surface->w - TOOLBOX_BOX_SIZE - TOOLBOX_MARGIN;
@@ -148,7 +164,6 @@ void getToolBoxColorPickerRect(int &x1, int &y1, int &x2, int &y2) {
     y2 = y1 + TOOLBOX_BOX_SIZE;
 }
 
-// devolve os limites (x1,y1,x2,y2) da i-ésima caixa da toolbox
 void getToolBoxColorsRect(int i, int &x1, int &y1, int &x2, int &y2) {
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
     x1 = window_surface->w - (2 * TOOLBOX_BOX_SIZE) - TOOLBOX_MARGIN - TOOLBOX_GAP;
@@ -157,7 +172,6 @@ void getToolBoxColorsRect(int i, int &x1, int &y1, int &x2, int &y2) {
     y2 = y1 + TOOLBOX_BOX_SIZE;
 }
 
-// -1 se o clique não caiu em nenhuma caixa
 int hitTestToolBox(int x, int y) {
     if (y > TOOLBOX_HEIGHT) return -1;
     for (int i = 0; i < TOOL_COUNT; i++) {
@@ -228,16 +242,6 @@ void drawColors() {
     }
 }
 
-// ============================================================
-// Cancela a forma que está sendo construída (ESC)
-// ============================================================
-void cancelPendingShape() {
-    pendingPoints.clear();
-}
-
-bool showToolText = false;
-bool showUI = true;
-
 void drawToolInfo(string name){
     const int TEXT_BOX_WIDTH = 210;
     const int TEXT_BOX_HEIGHT = 50;
@@ -256,28 +260,13 @@ void drawToolInfo(string name){
 
 }
 
-// ============================================================
-// Seleciona ferramenta (por clique na toolbox ou por tecla)
-// ============================================================
-void selectTool(ToolType tool) {
-    previousTool = currentTool;
-    currentTool = tool;
-    cancelPendingShape();
-    draggingShape = false;
+// CONSTRUTURES DE FORMA
 
-    showToolText = true;
-
-    const char* names[] = { "Reta", "Retangulo", "Circulo", "Poligono", "Bezier", "Preenchimento", "Selecionar", "Cor" };
-    drawToolInfo(names[tool]);
+void cancelPendingShape() {
+    pendingPoints.clear();
 }
 
-void selectColor(Color color) {
-    currentColor = color;
-}
 
-// ============================================================
-// Finaliza a forma corrente e adiciona na lista de shapes
-// ============================================================
 void finalizeShape() {
     switch (currentTool) {
 
@@ -329,10 +318,6 @@ void finalizeShape() {
 }
 
 
-// ============================================================
-// Trata clique do mouse fora da toolbox: acumula pontos e,
-// quando a forma tiver pontos suficientes, finaliza.
-// ============================================================
 void handleCanvasClick(int x, int y, Uint8 button) {
     Point clicked(x, y);
 
@@ -428,53 +413,28 @@ void drawPreview() {
 }
 
 
+// Função de Seleção de Ferramenta
 
-void preLoadShapes() {
-    Color color = Color(150,244,0);
-    Color color2 = Color(180,130,0);
+void selectTool(ToolType tool) {
+    previousTool = currentTool;
+    currentTool = tool;
+    cancelPendingShape();
+    draggingShape = false;
 
-    Point p3 = Point(600,430);
-    Point p4 = Point(10,40);
+    showToolText = true;
 
-    // shapes.push_back(make_unique<Line>(p3, p4, color, 1));
-
-    // Point rec_min = Point(600,430);
-    // Point rec_max = Point(10,40);
-
-
-    shapes.push_back(make_unique<Rectangle>(p3, p4, color));
-    Shape& lastRect = *(shapes.back());
-    //lastRect.setFill(color);
-    lastRect.setPoint(200,100);
-
-
-    // Point p1 = Point(600,400);
-    // Point p2 = Point(10,10);
-
-    // shapes.push_back(make_unique<Line>(p1, p2, color2, 0));
-
-    // Point circle_center = Point(420,420);
-    // int circle_radius = 250;
-
-
-    // shapes.push_back(make_unique<Circle>(circle_center, circle_radius, color));
-
-    list<Point> polygon_points;
-
-    polygon_points.push_back(Point(820,80));
-    polygon_points.push_back(Point(1140, 350));
-    polygon_points.push_back(Point(900, 160));
-    polygon_points.push_back(Point(1120, 160));
-    polygon_points.push_back(Point(1240, 340));
-
-    shapes.push_back(make_unique<Polygon>(polygon_points, Color(20,140,255)));
-
-    Shape& lastPoly = *(shapes.back());
-    lastPoly.setFill(Color(30,140,255));
-
-    // shapes.push_back(make_unique<Bezier>(Point(420,80), Point(540, 350), Point(300, 160), Point(340, 340), Color(20,140,140)));
+    const char* names[] = { "Reta", "Retangulo", "Circulo", "Poligono", "Bezier", "Preenchimento", "Selecionar", "Cor" };
+    drawToolInfo(names[tool]);
 }
 
+// Função de Seleção de Cor
+
+void selectColor(Color color) {
+    currentColor = color;
+}
+
+
+// FUNÇÃO DISPLAY PARA PINTURA DA TELA
 
 void display()
 {
@@ -509,24 +469,11 @@ void clear() {
 
 }
 
-// void clear() {
-//     // Pega o renderer direto do seu Context
-//     SDL_Renderer* renderer = Context::getInstance()->getRenderer();
-
-//     // Define a cor de fundo (neste caso, Branco: 255, 255, 255, 255)
-//     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
-//     // Limpa a tela inteira com a cor definida acima
-//     SDL_RenderClear(renderer);
-// }
-
 // Driver code
 int main(int argc, char* args[])
 {
 
 	SDL_Event event;
-
-    // preLoadShapes();
 
 	// initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
