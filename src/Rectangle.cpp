@@ -59,16 +59,8 @@ void Rectangle::draw(Painter& p) {
     p.drawRectangle(t1, t2, t3, t4, borderColor);
 
     if (this->isFilled()) {
-
-        Color paintColor = fillColor.deSaturateColor(50);
-
-        Color oldColor = p.getColorAt(pivo.getX(), pivo.getY());
-
-        Point inner1 = Utils::getInstance()->midPoint(min, pivo);
-        Point inner2 = Utils::getInstance()->midPoint(max, pivo);
-
-        p.floodFill(calculateFillPoint().getX(), calculateFillPoint().getY(), paintColor, oldColor);
-
+        vector<Point> corners = { t1, t2, t3, t4 };
+        p.fillPolygon(corners, fillColor.deSaturateColor(50));
     }
 
     if (isSelected()) {

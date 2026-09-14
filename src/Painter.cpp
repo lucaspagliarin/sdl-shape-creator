@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include <list>
 #include <stack>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -437,6 +439,54 @@ void Painter::fillRect(int x1, int y1, int x2, int y2, Color color) {
     if (y1 > y2) { int aux = y1; y1 = y2; y2 = aux; }
     for (int x = x1; x <= x2; x++) {
         for (int y = y1; y <= y2; y++) {
+            setPixel(x, y, color);
+        }
+    }
+}
+
+void Painter::fillPolygon(const vector<Point>& points, Color color) {
+    if (points.size() < 3) return;
+
+    int minY = points[0].getY(), maxY = points[0].getY();
+    for (const Point& p : points) {
+        minY = std::min(minY, p.getY());
+        maxY = std::max(maxY, p.getY());
+    }
+
+    size_t n = points.size();
+
+    for (int y = minY; y <= maxY; y++) {
+        vector<int> xIntersections;
+
+        for (size_t i = 0, j = n - 1; i < n; j = i++) {
+            double yi = points[i].getY();
+            double yj = points[j].getY();
+
+            // a aresta cruza essa scanline?
+            if ((yi <= y && yj > y) || (yj <= y && yi > y)) {
+                double xi = points[i].getX();
+                double xj = points[j].getX();
+                double x = xi + (y - yi) * (xj - xi) / (yj - yi);
+                xIntersections.push_back((int) std::round(x));
+            }
+        }
+
+        std::sort(xIntersections.begin(), xIntersections.end());
+
+        // pinta entre cada par de interseções
+        for (size_t k = 0; k + 1 < xIntersections.size(); k += 2) {
+            for (int x = xIntersections[k]; x <= xIntersections[k + 1]; x++) {
+                setPixel(x, y, color);
+            }
+        }
+    }
+}
+
+void Painter::fillCircle(Point center, int radius, Color color) {
+    for (int dy = -radius; dy <= radius; dy++) {
+        int dx = (int) sqrt((double)(radius * radius - dy * dy));
+        int y = center.getY() + dy;
+        for (int x = center.getX() - dx; x <= center.getX() + dx; x++) {
             setPixel(x, y, color);
         }
     }

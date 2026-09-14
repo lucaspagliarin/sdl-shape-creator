@@ -30,17 +30,9 @@ void Circle::draw(Painter& p) {
         raioTransformado,
         color);
 
-    if (this->isFilled()){
-        Color paintColor = fillColor.deSaturateColor(50);
-        Point center = this->transform.apply(this->center);
-        Color oldColor = p.getColorAt(center.getX(),center.getY());
-
-        p.floodFill(
-            center.getX(),
-            center.getY(),
-            paintColor,
-            oldColor
-        );
+    if (this->isFilled()) {
+        Point c = this->transform.apply(this->center);
+        p.fillCircle(c, raioTransformado, fillColor.deSaturateColor(50));
     }
 
     if (isSelected()) {

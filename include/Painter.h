@@ -4,6 +4,8 @@
 #include <Color.h>
 #include<SDL2/SDL.h>
 #include <list>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -20,6 +22,8 @@ class Painter
         void drawBezier(Point start, Point end, Point anchor1, Point anchor2, Color color);
         void floodFill(int x, int y, Color newColor, Color oldColor);
         void fillRect(int x1, int y1, int x2, int y2, Color color);
+        void fillPolygon(const std::vector<Point>& points, Color color);
+        void fillCircle(Point center, int radius, Color color);
         Color getColorAt(int x, int y);
         virtual ~Painter();
 

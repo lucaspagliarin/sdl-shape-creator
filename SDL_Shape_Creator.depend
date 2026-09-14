@@ -550,11 +550,13 @@
 1789353806 source:c:\www\cg\sdl_shape_creator\src\point.cpp
 	"Point.h"
 
-1789353805 c:\www\cg\sdl_shape_creator\include\painter.h
+1789423096 c:\www\cg\sdl_shape_creator\include\painter.h
 	<Point.h>
 	<Color.h>
 	<SDL2/SDL.h>
 	<list>
+	<algorithm>
+	<vector>
 
 1789354018 source:c:\www\cg\sdl_shape_creator\src\line.cpp
 	"Shape.h"

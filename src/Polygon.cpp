@@ -43,12 +43,8 @@ void Polygon::draw(Painter& p) {
         this->color);
 
     if (this->isFilled()) {
-        Color paintColor = fillColor.deSaturateColor(50);
-
-        Color oldColor = p.getColorAt(centroidatual.getX(), centroidatual.getY());
-
-        p.floodFill(centroidatual.getX(), centroidatual.getY(), paintColor, oldColor);
-
+        vector<Point> verts(pontosDraw.begin(), pontosDraw.end());
+        p.fillPolygon(verts, fillColor.deSaturateColor(50));
     }
 
 
