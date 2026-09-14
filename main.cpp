@@ -545,7 +545,7 @@ int main(int argc, char* args[])
             Context::getInstance()->setWindowSurface(window_surface);
         }
 
-        bool fontLoaded = Context::getInstance()->loadBitmapFont("../assets/Minecraft_bitmap_font_SDL2.bmp", 16, 16, 16);
+        bool fontLoaded = Context::getInstance()->loadBitmapFont("assets/Minecraft_bitmap_font_SDL2.bmp", 16, 16, 16);
 
         if (!fontLoaded) {
             printf("Font not loaded: %s\n", SDL_GetError());

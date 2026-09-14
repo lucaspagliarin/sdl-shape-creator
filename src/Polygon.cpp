@@ -7,6 +7,7 @@
 #include "math.h"
 #include <list>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ void Polygon::draw(Painter& p) {
 
     }
 
-    
+
 
     if (isSelected()) {
         for (Point& pt : pontosDraw) {

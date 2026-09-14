@@ -91,7 +91,7 @@
 	<Point.h>
 	<Line.h>
 
-1690990556 c:\sdl2\include\sdl2\sdl.h
+1704143989 c:\sdl2\include\sdl2\sdl.h
 	"SDL_main.h"
 	"SDL_stdinc.h"
 	"SDL_assert.h"
@@ -129,12 +129,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_main.h
+1704143989 c:\sdl2\include\sdl2\sdl_main.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_stdinc.h
+1721653370 c:\sdl2\include\sdl2\sdl_stdinc.h
 	"SDL_config.h"
 	<sys/types.h>
 	<stdio.h>
@@ -166,29 +166,30 @@
 	<stdio.h>
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_config.h
+1728076658 c:\sdl2\include\sdl2\sdl_config.h
 	"SDL_platform.h"
 	<winsdkver.h>
 	<sdkddkver.h>
 
-1690990556 c:\sdl2\include\sdl2\sdl_platform.h
+1716845962 c:\sdl2\include\sdl2\sdl_platform.h
 	<AvailabilityMacros.h>
+	<TargetConditionals.h>
 	<TargetConditionals.h>
 	<winapifamily.h>
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\begin_code.h
+1704143989 c:\sdl2\include\sdl2\begin_code.h
 
-1690990556 c:\sdl2\include\sdl2\close_code.h
+1704143989 c:\sdl2\include\sdl2\close_code.h
 
-1690990556 c:\sdl2\include\sdl2\sdl_assert.h
+1704143989 c:\sdl2\include\sdl2\sdl_assert.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	<signal.h>
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_atomic.h
+1704474090 c:\sdl2\include\sdl2\sdl_atomic.h
 	"SDL_stdinc.h"
 	"SDL_platform.h"
 	"begin_code.h"
@@ -196,7 +197,7 @@
 	<mbarrier.h>
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_audio.h
+1704143989 c:\sdl2\include\sdl2\sdl_audio.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_endian.h"
@@ -206,12 +207,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_error.h
+1704143989 c:\sdl2\include\sdl2\sdl_error.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_endian.h
+1704143989 c:\sdl2\include\sdl2\sdl_endian.h
 	"SDL_stdinc.h"
 	<intrin.h>
 	<endian.h>
@@ -220,13 +221,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_mutex.h
+1704143989 c:\sdl2\include\sdl2\sdl_mutex.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_thread.h
+1704143989 c:\sdl2\include\sdl2\sdl_thread.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_atomic.h"
@@ -237,18 +238,18 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_rwops.h
+1704143989 c:\sdl2\include\sdl2\sdl_rwops.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_clipboard.h
+1704143989 c:\sdl2\include\sdl2\sdl_clipboard.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_cpuinfo.h
+1704143989 c:\sdl2\include\sdl2\sdl_cpuinfo.h
 	"SDL_stdinc.h"
 	<intrin.h>
 	<intrin.h>
@@ -270,7 +271,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_events.h
+1704143989 c:\sdl2\include\sdl2\sdl_events.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -284,7 +285,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_video.h
+1705436636 c:\sdl2\include\sdl2\sdl_video.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -292,13 +293,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_pixels.h
+1704143989 c:\sdl2\include\sdl2\sdl_pixels.h
 	"SDL_stdinc.h"
 	"SDL_endian.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_rect.h
+1704143989 c:\sdl2\include\sdl2\sdl_rect.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_pixels.h"
@@ -306,7 +307,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_surface.h
+1704143989 c:\sdl2\include\sdl2\sdl_surface.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -315,11 +316,11 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_blendmode.h
+1706222995 c:\sdl2\include\sdl2\sdl_blendmode.h
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_keyboard.h
+1704143989 c:\sdl2\include\sdl2\sdl_keyboard.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_keycode.h"
@@ -327,21 +328,21 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_keycode.h
+1704143989 c:\sdl2\include\sdl2\sdl_keycode.h
 	"SDL_stdinc.h"
 	"SDL_scancode.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_scancode.h
+1704143989 c:\sdl2\include\sdl2\sdl_scancode.h
 	"SDL_stdinc.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_mouse.h
+1704143989 c:\sdl2\include\sdl2\sdl_mouse.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_joystick.h
+1720038259 c:\sdl2\include\sdl2\sdl_joystick.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_guid.h"
@@ -349,13 +350,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_guid.h
+1704143989 c:\sdl2\include\sdl2\sdl_guid.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_gamecontroller.h
+1704740995 c:\sdl2\include\sdl2\sdl_gamecontroller.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_rwops.h"
@@ -364,17 +365,17 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_sensor.h
+1704143989 c:\sdl2\include\sdl2\sdl_sensor.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_quit.h
+1704143989 c:\sdl2\include\sdl2\sdl_quit.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_gesture.h
+1704143989 c:\sdl2\include\sdl2\sdl_gesture.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -382,70 +383,70 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_touch.h
+1704143989 c:\sdl2\include\sdl2\sdl_touch.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_filesystem.h
+1704143989 c:\sdl2\include\sdl2\sdl_filesystem.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_haptic.h
+1704143989 c:\sdl2\include\sdl2\sdl_haptic.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_joystick.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_hidapi.h
+1704143989 c:\sdl2\include\sdl2\sdl_hidapi.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_hints.h
+1725805822 c:\sdl2\include\sdl2\sdl_hints.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_loadso.h
+1704143989 c:\sdl2\include\sdl2\sdl_loadso.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_log.h
+1706413618 c:\sdl2\include\sdl2\sdl_log.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_messagebox.h
+1704143989 c:\sdl2\include\sdl2\sdl_messagebox.h
 	"SDL_stdinc.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_metal.h
+1704143989 c:\sdl2\include\sdl2\sdl_metal.h
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_power.h
+1704143989 c:\sdl2\include\sdl2\sdl_power.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_render.h
+1704143989 c:\sdl2\include\sdl2\sdl_render.h
 	"SDL_stdinc.h"
 	"SDL_rect.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_shape.h
+1704143989 c:\sdl2\include\sdl2\sdl_shape.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -454,7 +455,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_system.h
+1704143989 c:\sdl2\include\sdl2\sdl_system.h
 	"SDL_stdinc.h"
 	"SDL_keyboard.h"
 	"SDL_render.h"
@@ -462,24 +463,24 @@
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_timer.h
+1704143989 c:\sdl2\include\sdl2\sdl_timer.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_version.h
+1727799957 c:\sdl2\include\sdl2\sdl_version.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_locale.h
+1704143989 c:\sdl2\include\sdl2\sdl_locale.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1690990556 c:\sdl2\include\sdl2\sdl_misc.h
+1704143989 c:\sdl2\include\sdl2\sdl_misc.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
@@ -507,49 +508,61 @@
 	"Context.h"
 	"Math.h"
 
-1787847525 source:c:\www\cg\sdl_shape_creator\main.cpp
+1789354018 source:c:\www\cg\sdl_shape_creator\main.cpp
 	<SDL2/SDL.h>
 	<stdio.h>
 	<unistd.h>
+	<vector>
+	<list>
 	<Context.h>
 	<Color.h>
 	<Point.h>
 	<Painter.h>
 	<Line.h>
+	<Rectangle.h>
+	<Polygon.h>
+	<Circle.h>
+	<Bezier.h>
+	<Shape.h>
+	"Utils.h"
 
-1787759942 c:\www\cg\sdl_shape_creator\include\context.h
+1789353714 c:\www\cg\sdl_shape_creator\include\context.h
 	<SDL2/SDL.h>
-
-1787759942 c:\www\cg\sdl_shape_creator\include\color.h
-	<SDL2/SDL.h>
-
-1787759942 c:\www\cg\sdl_shape_creator\include\point.h
-
-1787846886 c:\www\cg\sdl_shape_creator\include\line.h
-	<Point.h>
+	<string>
 	<Color.h>
+
+1789353714 c:\www\cg\sdl_shape_creator\include\color.h
 	<SDL2/SDL.h>
 
-1787759942 source:c:\www\cg\sdl_shape_creator\src\color.cpp
+1789353805 c:\www\cg\sdl_shape_creator\include\point.h
+
+1789354018 c:\www\cg\sdl_shape_creator\include\line.h
+	"Shape.h"
+	<SDL2/SDL.h>
+
+1789353714 source:c:\www\cg\sdl_shape_creator\src\color.cpp
 	"Color.h"
 	"Context.h"
 
-1787759942 source:c:\www\cg\sdl_shape_creator\src\context.cpp
+1789353806 source:c:\www\cg\sdl_shape_creator\src\context.cpp
 	"Context.h"
 
-1787759942 source:c:\www\cg\sdl_shape_creator\src\point.cpp
+1789353806 source:c:\www\cg\sdl_shape_creator\src\point.cpp
 	"Point.h"
 
-1787952557 c:\www\cg\sdl_shape_creator\include\painter.h
+1789353805 c:\www\cg\sdl_shape_creator\include\painter.h
 	<Point.h>
 	<Color.h>
 	<SDL2/SDL.h>
+	<list>
 
-1787847597 source:c:\www\cg\sdl_shape_creator\src\line.cpp
+1789354018 source:c:\www\cg\sdl_shape_creator\src\line.cpp
+	"Shape.h"
 	"Line.h"
 	"Context.h"
 	"Painter.h"
-	"Math.h"
+	"math.h"
+	"Utils.h"
 
 1789153281 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\main.cpp
 	<SDL2/SDL.h>
@@ -722,4 +735,121 @@
 
 1788975699 c:\users\jonatan\prog\codeblocks\sdl-shape-creator\include\transform.h
 	"Point.h"
+
+1789354018 c:\www\cg\sdl_shape_creator\include\shape.h
+	<Point.h>
+	<Color.h>
+	<SDL2/SDL.h>
+	"Point.h"
+	"Painter.h"
+	"Transform.h"
+
+1789353805 c:\www\cg\sdl_shape_creator\include\transform.h
+	"Point.h"
+
+1789354018 c:\www\cg\sdl_shape_creator\include\rectangle.h
+	"Shape.h"
+	<SDL2/SDL.h>
+	<list>
+	<memory>
+
+1789354018 c:\www\cg\sdl_shape_creator\include\polygon.h
+	"Shape.h"
+	<SDL2/SDL.h>
+	<list>
+
+1789354018 c:\www\cg\sdl_shape_creator\include\circle.h
+	"Shape.h"
+	<SDL2/SDL.h>
+	<list>
+
+1789354018 c:\www\cg\sdl_shape_creator\include\bezier.h
+	"Shape.h"
+	<SDL2/SDL.h>
+	<list>
+
+1789353714 c:\www\cg\sdl_shape_creator\include\utils.h
+	"Utils.h"
+	"Context.h"
+	"Point.h"
+	<SDL2/SDL.h>
+	<stdio.h>
+	<unistd.h>
+	<cmath>
+	<string>
+	<chrono>
+	<ctime>
+	<sstream>
+	<iomanip>
+
+1789353806 source:c:\www\cg\sdl_shape_creator\src\transform.cpp
+	"Transform.h"
+	"Point.h"
+	<cmath>
+
+1789353806 source:c:\www\cg\sdl_shape_creator\src\utils.cpp
+	"Utils.h"
+	"Context.h"
+	<SDL2/SDL.h>
+	<stdio.h>
+	<unistd.h>
+	<cmath>
+	<string>
+	<chrono>
+	<ctime>
+	<sstream>
+	<iomanip>
+
+1789354018 source:c:\www\cg\sdl_shape_creator\src\bezier.cpp
+	"Shape.h"
+	"Bezier.h"
+	"Line.h"
+	"Context.h"
+	"Painter.h"
+	"math.h"
+
+1789354018 source:c:\www\cg\sdl_shape_creator\src\circle.cpp
+	"Shape.h"
+	"Circle.h"
+	"Context.h"
+	"Painter.h"
+	"math.h"
+
+1789354018 source:c:\www\cg\sdl_shape_creator\src\painter.cpp
+	"Painter.h"
+	"Point.h"
+	"Context.h"
+	"math.h"
+	"Transform.h"
+	<list>
+	<stack>
+
+1789354018 source:c:\www\cg\sdl_shape_creator\src\rectangle.cpp
+	"Shape.h"
+	"Rectangle.h"
+	"Line.h"
+	"Context.h"
+	"Painter.h"
+	"Utils.h"
+	"math.h"
+	<cstdio>
+
+1789354018 source:c:\www\cg\sdl_shape_creator\src\shape.cpp
+	"Shape.h"
+	"Context.h"
+	"Painter.h"
+	"math.h"
+	<iostream>
+
+1789354096 source:c:\www\cg\sdl_shape_creator\src\polygon.cpp
+	"Shape.h"
+	"Polygon.h"
+	"Line.h"
+	"Context.h"
+	"Painter.h"
+	"Utils.h"
+	"math.h"
+	<list>
+	<iostream>
+	<vector>
 
