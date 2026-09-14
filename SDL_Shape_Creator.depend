@@ -563,7 +563,7 @@
 	"math.h"
 	"Utils.h"
 
-1789354980 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\main.cpp
+1789422512 source:c:\users\jonatan\prog\codeblocks\sdl-shape-creator\main.cpp
 	<SDL2/SDL.h>
 	<stdio.h>
 	<unistd.h>
@@ -783,7 +783,7 @@
 	<sstream>
 	<iomanip>
 
-1789353806 source:c:\www\cg\sdl_shape_creator\src\transform.cpp
+1789402224 source:c:\www\cg\sdl_shape_creator\src\transform.cpp
 	"Transform.h"
 	"Point.h"
 	<cmath>
@@ -801,22 +801,23 @@
 	<sstream>
 	<iomanip>
 
-1789354018 source:c:\www\cg\sdl_shape_creator\src\bezier.cpp
+1789402224 source:c:\www\cg\sdl_shape_creator\src\bezier.cpp
 	"Shape.h"
 	"Bezier.h"
 	"Line.h"
 	"Context.h"
 	"Painter.h"
 	"math.h"
+	"Utils.h"
 
-1789354018 source:c:\www\cg\sdl_shape_creator\src\circle.cpp
+1789402224 source:c:\www\cg\sdl_shape_creator\src\circle.cpp
 	"Shape.h"
 	"Circle.h"
 	"Context.h"
 	"Painter.h"
 	"math.h"
 
-1789354018 source:c:\www\cg\sdl_shape_creator\src\painter.cpp
+1789402224 source:c:\www\cg\sdl_shape_creator\src\painter.cpp
 	"Painter.h"
 	"Point.h"
 	"Context.h"
@@ -825,7 +826,7 @@
 	<list>
 	<stack>
 
-1789354018 source:c:\www\cg\sdl_shape_creator\src\rectangle.cpp
+1789402224 source:c:\www\cg\sdl_shape_creator\src\rectangle.cpp
 	"Shape.h"
 	"Rectangle.h"
 	"Line.h"
@@ -835,14 +836,14 @@
 	"math.h"
 	<cstdio>
 
-1789354018 source:c:\www\cg\sdl_shape_creator\src\shape.cpp
+1789402224 source:c:\www\cg\sdl_shape_creator\src\shape.cpp
 	"Shape.h"
 	"Context.h"
 	"Painter.h"
 	"math.h"
 	<iostream>
 
-1789354096 source:c:\www\cg\sdl_shape_creator\src\polygon.cpp
+1789402224 source:c:\www\cg\sdl_shape_creator\src\polygon.cpp
 	"Shape.h"
 	"Polygon.h"
 	"Line.h"
