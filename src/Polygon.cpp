@@ -32,7 +32,7 @@ void Polygon::draw(Painter& p) {
 
     list<Point> pontosDraw;
   for (const Point& pt : this->points) {
-        // Aplica a matriz de transformação no ponto atual
+        // Aplica a matriz de transformaï¿½ï¿½o no ponto atual
         Point ptTransformado = this->transform.apply(pt);
 
         // Coloca o novo ponto transformado na nova lista
@@ -98,8 +98,8 @@ Point Polygon::calculateCentroid() {
         return Point{0, 0}; // Or handle according to your Point constructor
     }
 
-    double cx = 0;
-    double cy = 0;
+    int cx = 0;
+    int cy = 0;
     double signedArea = 0.0;
 
     // Use iterators to traverse the std::list
