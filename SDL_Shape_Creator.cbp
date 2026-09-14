@@ -42,6 +42,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="assets/Minecraft_bitmap_font_SDL2.bmp" />
 		<Unit filename="include/Bezier.h" />
 		<Unit filename="include/Circle.h" />
 		<Unit filename="include/Color.h" />
